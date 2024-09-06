@@ -1,0 +1,360 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		AA0F60BC2AE954B100643B6E /* clix-fmt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AA0F60BA2AE954B100643B6E /* clix-fmt.cpp */; };
+		AA0F60BD2AE954B100643B6E /* clix-fmt.hpp in Headers */ = {isa = PBXBuildFile; fileRef = AA0F60BB2AE954B100643B6E /* clix-fmt.hpp */; };
+		AA4046EC2AE40B870013D866 /* clix-ocr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AA4046E62AE40B870013D866 /* clix-ocr.cpp */; };
+		AA4046EE2AE40B870013D866 /* clix-cv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AA4046E82AE40B870013D866 /* clix-cv.cpp */; };
+		AA4046EF2AE40B870013D866 /* clix-ocr.hpp in Headers */ = {isa = PBXBuildFile; fileRef = AA4046E92AE40B870013D866 /* clix-ocr.hpp */; };
+		AA4046F02AE40B870013D866 /* clix-cv.hpp in Headers */ = {isa = PBXBuildFile; fileRef = AA4046EA2AE40B870013D866 /* clix-cv.hpp */; };
+		AA4046F62AE411B30013D866 /* clix-t.hpp in Headers */ = {isa = PBXBuildFile; fileRef = AA4046F52AE411B30013D866 /* clix-t.hpp */; };
+		AA4046FB2AE429380013D866 /* clix-mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = AA4046FA2AE429380013D866 /* clix-mac.mm */; };
+		AA4046FD2AE42A090013D866 /* clix-mac.h in Headers */ = {isa = PBXBuildFile; fileRef = AA4046FC2AE42A090013D866 /* clix-mac.h */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		AA0F60BA2AE954B100643B6E /* clix-fmt.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = "clix-fmt.cpp"; sourceTree = "<group>"; };
+		AA0F60BB2AE954B100643B6E /* clix-fmt.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "clix-fmt.hpp"; sourceTree = "<group>"; };
+		AA16F2F62AE4CDE3005D3DAB /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		AA4046E62AE40B870013D866 /* clix-ocr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "clix-ocr.cpp"; sourceTree = "<group>"; };
+		AA4046E82AE40B870013D866 /* clix-cv.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "clix-cv.cpp"; sourceTree = "<group>"; };
+		AA4046E92AE40B870013D866 /* clix-ocr.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "clix-ocr.hpp"; sourceTree = "<group>"; };
+		AA4046EA2AE40B870013D866 /* clix-cv.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "clix-cv.hpp"; sourceTree = "<group>"; };
+		AA4046F52AE411B30013D866 /* clix-t.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "clix-t.hpp"; sourceTree = "<group>"; };
+		AA4046FA2AE429380013D866 /* clix-mac.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "clix-mac.mm"; sourceTree = "<group>"; };
+		AA4046FC2AE42A090013D866 /* clix-mac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "clix-mac.h"; sourceTree = "<group>"; };
+		AA4047102AE4456A0013D866 /* test */ = {isa = PBXFileReference; lastKnownFileType = folder; path = test; sourceTree = "<group>"; };
+		AA6868BB2AE3DABF00FAEC43 /* libclix.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libclix.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		AACAEAC02AE590E800ACFB08 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		AACAEACB2AE7725800ACFB08 /* clix.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = clix.hpp; sourceTree = "<group>"; };
+		AAD3EBE12B8CE07C00018AA2 /* clix-err.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "clix-err.h"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		AA6868B92AE3DABF00FAEC43 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		AA4046C22AE3E2750013D866 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		AA4046E52AE40B630013D866 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				AA4046FC2AE42A090013D866 /* clix-mac.h */,
+				AA4046FA2AE429380013D866 /* clix-mac.mm */,
+				AA4046F52AE411B30013D866 /* clix-t.hpp */,
+				AA4046E82AE40B870013D866 /* clix-cv.cpp */,
+				AA4046EA2AE40B870013D866 /* clix-cv.hpp */,
+				AA4046E62AE40B870013D866 /* clix-ocr.cpp */,
+				AA4046E92AE40B870013D866 /* clix-ocr.hpp */,
+				AACAEACB2AE7725800ACFB08 /* clix.hpp */,
+				AAD3EBE12B8CE07C00018AA2 /* clix-err.h */,
+				AA0F60BA2AE954B100643B6E /* clix-fmt.cpp */,
+				AA0F60BB2AE954B100643B6E /* clix-fmt.hpp */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		AA6868B22AE3DABF00FAEC43 = {
+			isa = PBXGroup;
+			children = (
+				AACAEAC02AE590E800ACFB08 /* LICENSE */,
+				AA16F2F62AE4CDE3005D3DAB /* README.md */,
+				AA4046E52AE40B630013D866 /* src */,
+				AA4047102AE4456A0013D866 /* test */,
+				AA6868BC2AE3DABF00FAEC43 /* Products */,
+				AA4046C22AE3E2750013D866 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		AA6868BC2AE3DABF00FAEC43 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AA6868BB2AE3DABF00FAEC43 /* libclix.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		AA6868B72AE3DABF00FAEC43 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AA4046EF2AE40B870013D866 /* clix-ocr.hpp in Headers */,
+				AA4046F62AE411B30013D866 /* clix-t.hpp in Headers */,
+				AA0F60BD2AE954B100643B6E /* clix-fmt.hpp in Headers */,
+				AA4046F02AE40B870013D866 /* clix-cv.hpp in Headers */,
+				AA4046FD2AE42A090013D866 /* clix-mac.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		AA6868BA2AE3DABF00FAEC43 /* libclix */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AA6868C42AE3DABF00FAEC43 /* Build configuration list for PBXNativeTarget "libclix" */;
+			buildPhases = (
+				AA6868B72AE3DABF00FAEC43 /* Headers */,
+				AA6868B82AE3DABF00FAEC43 /* Sources */,
+				AA6868B92AE3DABF00FAEC43 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = libclix;
+			productName = libclix;
+			productReference = AA6868BB2AE3DABF00FAEC43 /* libclix.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		AA6868B32AE3DABF00FAEC43 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					AA6868BA2AE3DABF00FAEC43 = {
+						CreatedOnToolsVersion = 15.0;
+					};
+				};
+			};
+			buildConfigurationList = AA6868B62AE3DABF00FAEC43 /* Build configuration list for PBXProject "libclix" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = AA6868B22AE3DABF00FAEC43;
+			productRefGroup = AA6868BC2AE3DABF00FAEC43 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				AA6868BA2AE3DABF00FAEC43 /* libclix */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		AA6868B82AE3DABF00FAEC43 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AA4046EC2AE40B870013D866 /* clix-ocr.cpp in Sources */,
+				AA0F60BC2AE954B100643B6E /* clix-fmt.cpp in Sources */,
+				AA4046FB2AE429380013D866 /* clix-mac.mm in Sources */,
+				AA4046EE2AE40B870013D866 /* clix-cv.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		AA6868C22AE3DABF00FAEC43 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "";
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				USER_HEADER_SEARCH_PATHS = /usr/local/Cellar/leptonica/1.84.1/include;
+			};
+			name = Debug;
+		};
+		AA6868C32AE3DABF00FAEC43 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "";
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				USER_HEADER_SEARCH_PATHS = /usr/local/Cellar/leptonica/1.84.1/include;
+			};
+			name = Release;
+		};
+		AA6868C52AE3DABF00FAEC43 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = H6X9G3CYFJ;
+				EXECUTABLE_PREFIX = "";
+				HEADER_SEARCH_PATHS = (
+					3rd/gfc/include,
+					"../opencv-4.8.1/include",
+					"../tesseract-5.3.3/include",
+					/usr/local/Cellar/leptonica/1.83.1/include,
+					"../opencv-4.8.1/build/darwin",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SYMROOT = build;
+			};
+			name = Debug;
+		};
+		AA6868C62AE3DABF00FAEC43 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = H6X9G3CYFJ;
+				EXECUTABLE_PREFIX = "";
+				HEADER_SEARCH_PATHS = (
+					3rd/gfc/include,
+					"../opencv-4.8.1/include",
+					"../tesseract-5.3.3/include",
+					/usr/local/Cellar/leptonica/1.83.1/include,
+					"../opencv-4.8.1/build/darwin",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SYMROOT = build;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		AA6868B62AE3DABF00FAEC43 /* Build configuration list for PBXProject "libclix" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AA6868C22AE3DABF00FAEC43 /* Debug */,
+				AA6868C32AE3DABF00FAEC43 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AA6868C42AE3DABF00FAEC43 /* Build configuration list for PBXNativeTarget "libclix" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AA6868C52AE3DABF00FAEC43 /* Debug */,
+				AA6868C62AE3DABF00FAEC43 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = AA6868B32AE3DABF00FAEC43 /* Project object */;
+}
