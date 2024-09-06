@@ -193,9 +193,12 @@
   [pasteBoard declareTypes:[NSArray arrayWithObjects:NSPasteboardTypeString, nil] owner:nil];
   [pasteBoard setString:text forType:NSPasteboardTypeString];
   
+  
+
   /*!
   ** SELECT ALL
   */
+#if defined(__clang__) && (__clang_major__ >= 14)
   CGKeyCode keyCode = [ClixMacSimulator getKeyCodeFromChar:'a'];
   // key down
   CGEventRef keyDownEvent = CGEventCreateKeyboardEvent(NULL, keyCode, true);
@@ -206,12 +209,19 @@
   CGEventRef keyUpEvent = CGEventCreateKeyboardEvent(NULL, keyCode, false);
   CGEventPost(kCGSessionEventTap, keyUpEvent);
   CFRelease(keyUpEvent);
-  
+#else
+  CGEventRef event = CGEventCreateKeyboardEvent(NULL, (CGKeyCode)0x00, true); // a
+  CGEventFlags flags = kCGEventFlagMaskCommand;
+  CGEventSetFlags(event, flags);
+  CGEventPost(kCGHIDEventTap, event);
+  CFRelease(event);
+#endif  
   sleep(1);
   
   /*!
   ** PASTE
   */
+#if defined(__clang__) && (__clang_major__ >= 14)  
   keyCode = [ClixMacSimulator getKeyCodeFromChar:'v'];
   // key down
   keyDownEvent = CGEventCreateKeyboardEvent(NULL, keyCode, true);
@@ -222,6 +232,13 @@
   keyUpEvent = CGEventCreateKeyboardEvent(NULL, keyCode, false);
   CGEventPost(kCGSessionEventTap, keyUpEvent);
   CFRelease(keyUpEvent);
+#else
+  event = CGEventCreateKeyboardEvent(NULL, (CGKeyCode)0x09, true); // v
+  flags = kCGEventFlagMaskCommand;
+  CGEventSetFlags(event, flags);
+  CGEventPost(kCGHIDEventTap, event);
+  CFRelease(event);
+#endif  
 }
 
 /*!
@@ -229,6 +246,7 @@
 */
 - (NSString*) capture {
   NSString* savePath = [NSString stringWithFormat:@"%@/latest.png", self.workdir];
+#if defined(__clang__) && (__clang_major__ >= 14)  
   CGImageRef screenshot = CGWindowListCreateImage(CGRectInfinite, kCGWindowListOptionOnScreenOnly, kCGNullWindowID, kCGWindowImageDefault);
   NSBitmapImageRep* bitmap = [[NSBitmapImageRep alloc] initWithCGImage:screenshot];
   if (!bitmap) return @"";
@@ -239,7 +257,26 @@
   @catch (NSException* ex) {
     NSLog(@"Caught an exception: %@", ex);
   }
-  
+#else
+  // Get the main display ID
+  CGDirectDisplayID displayID = CGMainDisplayID();
+
+  // Capture the screen
+  CGImageRef screenShot = CGDisplayCreateImage(displayID);
+  CFStringRef cfstr = (__bridge CFStringRef)savePath;
+  CFURLRef url = CFURLCreateWithFileSystemPath(kCFAllocatorDefault,
+                                               cfstr,
+                                               kCFURLPOSIXPathStyle,
+                                               false);
+  CGImageDestinationRef destination = CGImageDestinationCreateWithURL(url, kUTTypePNG, 1, NULL);
+  CGImageDestinationAddImage(destination, screenShot, nil);
+  CGImageDestinationFinalize(destination);
+
+  // Release resources
+  CFRelease(destination);
+  CFRelease(url);
+  CGImageRelease(screenShot);
+#endif  
   return savePath;
 }
 

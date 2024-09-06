@@ -10,18 +10,23 @@
 */
 #include "clix-ocr.hpp"
 
+#if defined(__clang__) && (__clang_major__ >= 14)
 #include <tesseract/baseapi.h>
 #include <leptonica/allheaders.h>
 
 static tesseract::TessBaseAPI* tessapi = new tesseract::TessBaseAPI();
+#endif
 
 void clix::ocr::init(const char* tessdir)
 {
+#if defined(__clang__) && (__clang_major__ >= 14)  
   tessapi->Init(tessdir, "chi_sim");
+#endif  
 }
 
 gfc_string_p clix::ocr::text(const char* img)
 {
+#if defined(__clang__) && (__clang_major__ >= 14)  
   char *outText;
 
   // Open input image with leptonica library
@@ -36,4 +41,7 @@ gfc_string_p clix::ocr::text(const char* img)
   
   gfc_string_p ret = gfc_string_new(outText);
   return ret;
+#else
+  return gfc_string_new("");  
+#endif  
 }

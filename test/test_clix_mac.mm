@@ -14,15 +14,15 @@
 #import "clix-mac.h"
 
 int main(int argc, const char * argv[]) {
-  ClixMacSimulator* sim = [[ClixMacSimulator alloc] initWithDirectory:@"/Users/christian/Paws"];
+  ClixMacSimulator* sim = [[ClixMacSimulator alloc] initWithDirectory:@"/export/home/Paws"];
   
   // 测试点击
-//  sleep(2);
-//  [sim clickAtX:600 andY:400];
+  sleep(2);
+  [sim clickAtX:600 andY:400];
   
   // 测试粘贴
-//  sleep(1);
-//  [sim pasteFromText:@"hello, world"];
+  sleep(1);
+  [sim pasteFromText:@"hello, world"];
   
   // 截屏
   sleep(1);

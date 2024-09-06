@@ -165,23 +165,6 @@ clix::cv::match(const char* orig_path, const char* tpl_path, int* fx, int* fy)
       break;
   }
   
-//  // Find the location of the best match
-//  ::cv::Point minLoc, maxLoc;
-//  double minVal, maxVal;
-//  ::cv::minMaxLoc(result, &minVal, &maxVal, &minLoc, &maxLoc, ::cv::Mat());
-//  
-//  fprintf(stdout, "min(%d,%d) max(%d,%d)\n", minLoc.x, minLoc.y, maxLoc.x, maxLoc.y);
-//  double threshold = 0.90;
-//  if (maxVal >= threshold)
-//  {
-//    *fx = maxLoc.x;
-//    *fy = maxLoc.y;
-//  }
-//  else
-//  {
-//    *fx = -1;
-//    *fy = -1;
-//  }
 }
 
 void

@@ -54,7 +54,7 @@
 ** Simulates keypress operation to make the given character to be shown in
 ** any control which is focused.
 */
-- (void)press:(char)ch;
+// - (void)press:(char)ch;
 
 /*
 ** Simulates Ctrl+V operation to make the given text into clipboard and
@@ -107,20 +107,20 @@
 ** If not seen the wanted in time, it would return
 ** CLIX_ERROR_NOT_SEEN_IMAGE_AFTER_TIMEOUT error.
 */
-- (int) clickAtX:(int)x andY:(int)y untilSeen:(NSString*)wanted onTimeout:(NSUInteger)timeout;
+// - (int) clickAtX:(int)x andY:(int)y untilSeen:(NSString*)wanted onTimeout:(NSUInteger)timeout;
 
 /*
 ** Click an image, until found a wanted image on screen. This method allows 
 ** to scroll to bottom to find the wanted image.
 */
-- (int) clickAt:(NSString*)image untilSeen:(NSString*)wanted;
+// - (int) clickAt:(NSString*)image untilSeen:(NSString*)wanted;
 
 /*
 ** Click an image, until found a wanted image on screen. This method allows
 ** to scroll to bottom to find the wanted image. If not seen the wanted in
 ** time, it would return CLIX_ERROR_NOT_SEEN_IMAGE_AFTER_TIMEOUT error.
 */
-- (int) clickAt:(NSString*)image untilSeen:(NSString*)wanted onTimeout:(NSUInteger)timeout;
+// - (int) clickAt:(NSString*)image untilSeen:(NSString*)wanted onTimeout:(NSUInteger)timeout;
 
 /*
 ** Scroll delta offset, until found a wanted image on
