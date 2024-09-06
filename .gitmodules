@@ -1,0 +1,3 @@
+[submodule "3rd/gfc"]
+	path = 3rd/gfc
+	url = https://github.com/doublegsoft/gfc
