@@ -304,7 +304,7 @@
 					3rd/gfc/include,
 					"../opencv-4.8.1/include",
 					"../tesseract-5.3.3/include",
-					/usr/local/Cellar/leptonica/1.83.1/include,
+					/usr/local/Cellar/leptonica/1.85.0/include,
 					"../opencv-4.8.1/build/darwin",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -324,7 +324,7 @@
 					3rd/gfc/include,
 					"../opencv-4.8.1/include",
 					"../tesseract-5.3.3/include",
-					/usr/local/Cellar/leptonica/1.83.1/include,
+					/usr/local/Cellar/leptonica/1.85.0/include,
 					"../opencv-4.8.1/build/darwin",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";

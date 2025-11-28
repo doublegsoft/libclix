@@ -11,6 +11,12 @@
 .JMML..JMML.P^YbmdP'   YMbmd'.JMML..JMML..AM.   .MA.
 ```
 
+## Proprietary
+
+```
+doublegsoft.me
+```
+
 ## Mac Platform (clix-mac)
 
 ## Computer Vision (clix-cv)

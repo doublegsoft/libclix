@@ -105,14 +105,13 @@
     NSString* screenshot = [self capture];
     const char* screenshot_path = [screenshot UTF8String];
     const char* image_path = [wanted UTF8String];
-    sleep(5);
+    sleep(1);
     clix::cv::match(screenshot_path, image_path, &x, &y);
     if (x != -1) {
       x /= 2;
       y /= 2;
       [self clickAtX:(x + 15) andY:(y + 15)];
-      sleep(3);
-      
+      sleep(1);
       if (doSomething != nil)
       {
         doSomething();
@@ -137,11 +136,11 @@
     NSString* screenshot = [self capture];
     const char* screenshot_path = [screenshot UTF8String];
     const char* image_path = [wanted UTF8String];
-    sleep(5);
+    sleep(1);
     clix::cv::match(screenshot_path, image_path, &fx, &fy);
     if (fx != -1) {
       [self clickAtX:x andY:y];
-      sleep(3);
+      sleep(1);
       break;
     }
     [self scrollTo:delta];
