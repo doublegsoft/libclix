@@ -192,10 +192,11 @@
   [pasteBoard declareTypes:[NSArray arrayWithObjects:NSPasteboardTypeString, nil] owner:nil];
   [pasteBoard setString:text forType:NSPasteboardTypeString];
   
+  
 
-/*!
-** SELECT ALL
-*/
+  /*!
+  ** SELECT ALL
+  */
 #if defined(__clang__) && (__clang_major__ >= 14)
   CGKeyCode keyCode = [ClixMacSimulator getKeyCodeFromChar:'a'];
   // key down
@@ -216,9 +217,9 @@
 #endif  
   sleep(1);
   
-/*!
-** PASTE
-*/
+  /*!
+  ** PASTE
+  */
 #if defined(__clang__) && (__clang_major__ >= 14)  
   keyCode = [ClixMacSimulator getKeyCodeFromChar:'v'];
   // key down

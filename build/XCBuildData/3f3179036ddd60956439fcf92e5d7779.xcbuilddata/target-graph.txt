@@ -1,2 +1,0 @@
-Target dependency graph (1 target)
-Target 'libclix' in project 'libclix' (no dependencies)
