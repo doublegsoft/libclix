@@ -6,15 +6,69 @@ set(LIBNAME clix)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-set(OSS_ROOT "/export/local/opens")
-
-set(GFC      "3rd/gfc")
-
-set(OPENCV   "${OSS_ROOT}/opencv-3.4.16")
-
-if (CMAKE_SYSTEM_NAME STREQUAL "Darwin")
-  set(BUILD    "build/darwin")
+if (WIN32)
+elseif (APPLE)
+  set(PLATFORM                        "darwin")
+elseif (UNIX)
+  set(PLATFORM                        "linux")
 endif()
+
+set(BUILD                             "build/${PLATFORM}")
+
+################################################################################
+##                                                                            ##
+##                                    opencv                                  ##
+##                                                                            ##
+################################################################################
+if (WIN32)
+elseif (APPLE)
+  set(OPENCV_DIR                      "/opt/homebrew/Cellar/opencv/4.13.0_2")
+elseif (UNIX)
+endif()
+set(OPENCV_INCLUDE_DIR                "${OPENCV_DIR}/include/opencv4")
+set(OPENCV_LIBRARY_DIR                "${OPENCV_DIR}/lib")
+set(OPENCV_LIBRARIES                  opencv_core
+                                      opencv_imgproc
+                                      opencv_imgcodecs)
+                                      
+################################################################################
+##                                                                            ##
+##                                 tesseract                                  ##
+##                                                                            ##
+################################################################################
+if (WIN32)
+elseif (APPLE)
+  set(TESSERACT_DIR                   "/opt/homebrew/Cellar/tesseract/5.5.2")
+elseif (UNIX)
+endif()
+
+set(TESSERACT_INCLUDE_DIR             "${TESSERACT_DIR}/include")
+set(TESSERACT_LIBRARY_DIR             "${TESSERACT_DIR}/lib")
+set(TESSERACT_LIBRARIES               tesseract)
+
+################################################################################
+##                                                                            ##
+##                                 leptonica                                  ##
+##                                                                            ##
+################################################################################
+if (WIN32)
+elseif (APPLE)
+  set(LEPTONICA_DIR                   "/opt/homebrew/Cellar/leptonica/1.86.0")
+elseif (UNIX)
+endif()
+set(LEPTONICA_INCLUDE_DIR             "${LEPTONICA_DIR}/include")
+set(LEPTONICA_LIBRARY_DIR             "${LEPTONICA_DIR}/lib")
+set(LEPTONICA_LIBRARIES               leptonica)
+
+################################################################################
+##                                                                            ##
+##                                   gfc                                      ##
+##                                                                            ##
+################################################################################
+set(GFC_DIR                           "3rd/gfc")
+set(GFC_INCLUDE_DIR                   "${GFC_DIR}/include")
+set(GFC_LIBRARY_DIR                   "${GFC_DIR}/${BUILD}")
+set(GFC_LIBRARIES                     gfc)
 
 set(LIBCLIX_SOURCES
   "src/clix-cv.cpp"
@@ -24,10 +78,9 @@ set(LIBCLIX_SOURCES
 )
 
 set(LIBCLIX_LIBRARIES 
-  gfc
-  opencv_core
-  opencv_imgproc
-  opencv_imgcodecs
+  ${GFC_LIBRARIES}
+  ${OPENCV_LIBRARIES}
+  ${TESSERACT_LIBRARIES}
   "-framework foundation"
   "-framework carbon"
   "-framework cocoa"
@@ -36,34 +89,19 @@ set(LIBCLIX_LIBRARIES
 set(WITH_GFC_CRYPTO OFF CACHE BOOL "gfc crypto" FORCE)
 set(WITH_GFC_jVM OFF CACHE BOOL "gfc jvm" FORCE)
 set(WITH_GFC_LUA OFF CACHE BOOL "gfc lua" FORCE)
-add_subdirectory(${GFC})
+add_subdirectory(${GFC_DIR})
 
 include_directories(
   src
-  3rd/gfc/include                              
-  ${OPENCV}/include                           
-  ${OPENCV}/modules/core/include              
-  ${OPENCV}/modules/calib3d/include           
-  ${OPENCV}/modules/features2d/include        
-  ${OPENCV}/modules/flann/include             
-  ${OPENCV}/modules/dnn/include               
-  ${OPENCV}/modules/highgui/include           
-  ${OPENCV}/modules/imgproc/include           
-  ${OPENCV}/modules/imgcodecs/include         
-  ${OPENCV}/modules/videoio/include           
-  ${OPENCV}/modules/ml/include                
-  ${OPENCV}/modules/objdetect/include         
-  ${OPENCV}/modules/photo/include             
-  ${OPENCV}/modules/shape/include             
-  ${OPENCV}/modules/stitching/include         
-  ${OPENCV}/modules/superres/include          
-  ${OPENCV}/modules/video/include             
-  ${OPENCV}/modules/videostab/include 
-  ${OPENCV}/${BUILD}  
+  ${GFC_INCLUDE_DIR}
+  ${OPENCV_INCLUDE_DIR}
+  ${TESSERACT_INCLUDE_DIR}
+  ${LEPTONICA_INCLUDE_DIR}
 )
 
 link_directories(
-  ${OPENCV}/${BUILD}/lib
+  ${OPENCV_LIBRARY_DIR}
+  ${TESSERACT_LIBRARY_DIR}
 )
 
 add_library(${LIBNAME} STATIC ${LIBCLIX_SOURCES})

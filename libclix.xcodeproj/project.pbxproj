@@ -304,8 +304,11 @@
 					3rd/gfc/include,
 					"../opencv-4.8.1/include",
 					"../tesseract-5.3.3/include",
-					/usr/local/Cellar/leptonica/1.85.0/include,
 					"../opencv-4.8.1/build/darwin",
+					/usr/local/Cellar/leptonica/1.85.0/include,
+					/opt/homebrew/Cellar/opencv/4.13.0_2/include/opencv4,
+					/opt/homebrew/Cellar/tesseract/5.5.2/include,
+					/opt/homebrew/Cellar/leptonica/1.87.0/include,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -324,8 +327,11 @@
 					3rd/gfc/include,
 					"../opencv-4.8.1/include",
 					"../tesseract-5.3.3/include",
-					/usr/local/Cellar/leptonica/1.85.0/include,
 					"../opencv-4.8.1/build/darwin",
+					/usr/local/Cellar/leptonica/1.85.0/include,
+					/opt/homebrew/Cellar/opencv/4.13.0_2/include/opencv4,
+					/opt/homebrew/Cellar/tesseract/5.5.2/include,
+					/opt/homebrew/Cellar/leptonica/1.87.0/include,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
