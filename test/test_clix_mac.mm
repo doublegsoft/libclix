@@ -14,7 +14,7 @@
 #import "clix-mac.h"
 
 int main(int argc, const char * argv[]) {
-  ClixMacSimulator* sim = [[ClixMacSimulator alloc] initWithDirectory:@"/export/home/Paws"];
+  ClixMacSimulator* sim = [[ClixMacSimulator alloc] initWithDirectory:@"/Users/christian/Paws"];
   
   // 测试点击
   sleep(2);

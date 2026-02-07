@@ -6,11 +6,13 @@ set(LIBNAME clix)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-set(OSS_ROOT "/export/local/opens")
+set(OSS_ROOT "/Volumes/EXPORT/local/opens")
 
-set(GFC      "3rd/gfc")
+set(GFC      					"3rd/gfc")
 
-set(OPENCV   "${OSS_ROOT}/opencv-3.4.16")
+set(OPENCV   					"${OSS_ROOT}/opencv-4.7.0")
+set(TESSERACT   			"${OSS_ROOT}/tesseract-5.3.3")
+set(LEPTONICA					"/usr/local/Cellar/leptonica/1.85.0")
 
 if (CMAKE_SYSTEM_NAME STREQUAL "Darwin")
   set(BUILD    "build/darwin")
@@ -28,9 +30,23 @@ set(LIBCLIX_LIBRARIES
   opencv_core
   opencv_imgproc
   opencv_imgcodecs
+  tesseract
+  leptonica
+  png
+  archive
+  openjp2
+  turbojpeg
+  z
+  curl
+  ittnotify
+  libtiff
+  libwebp
   "-framework foundation"
   "-framework carbon"
   "-framework cocoa"
+  "-framework accelerate"
+  "-framework opencl"
+  "-framework screencapturekit"
 )
 
 set(WITH_GFC_CRYPTO OFF CACHE BOOL "gfc crypto" FORCE)
@@ -60,10 +76,19 @@ include_directories(
   ${OPENCV}/modules/video/include             
   ${OPENCV}/modules/videostab/include 
   ${OPENCV}/${BUILD}  
+  ${TESSERACT}/include
+  ${TESSERACT}/${BUILD}/include
+  ${LEPTONICA}/include
 )
 
 link_directories(
   ${OPENCV}/${BUILD}/lib
+  ${OPENCV}/${BUILD}/3rdparty/lib
+  ${TESSERACT}/${BUILD}
+  ${LEPTONICA}/lib
+  "/usr/local/Cellar/libpng/1.6.50/lib"
+  "/usr/local/Cellar/openjpeg/2.5.3/lib"
+  "/usr/local/Cellar/jpeg-turbo/3.1.1/lib"
 )
 
 add_library(${LIBNAME} STATIC ${LIBCLIX_SOURCES})
