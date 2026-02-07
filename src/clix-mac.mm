@@ -10,6 +10,7 @@
 */
 #import <Cocoa/Cocoa.h>
 #import <ApplicationServices/ApplicationServices.h>
+#import <ScreenCaptureKit/ScreenCaptureKit.h>
 #import <Carbon/Carbon.h>
 
 #import "clix-mac.h"
@@ -246,12 +247,68 @@
 - (NSString*) capture {
   NSString* savePath = [NSString stringWithFormat:@"%@/latest.png", self.workdir];
 #if defined(__clang__) && (__clang_major__ >= 14)  
-  CGImageRef screenshot = CGWindowListCreateImage(CGRectInfinite, kCGWindowListOptionOnScreenOnly, kCGNullWindowID, kCGWindowImageDefault);
+//  CGImageRef screenshot = CGWindowListCreateImage(CGRectInfinite, kCGWindowListOptionOnScreenOnly, kCGNullWindowID, kCGWindowImageDefault);
+//  NSBitmapImageRep* bitmap = [[NSBitmapImageRep alloc] initWithCGImage:screenshot];
+//  if (!bitmap) return @"";
+//  @try {
+//    NSData* data = [bitmap representationUsingType:NSBitmapImageFileTypePNG properties:{}];
+//    [data writeToFile:savePath atomically: NO];
+//  }
+//  @catch (NSException* ex) {
+//    NSLog(@"Caught an exception: %@", ex);
+//  }
+  // 1. Setup synchronization to mimic the old blocking behavior
+  dispatch_semaphore_t sema = dispatch_semaphore_create(0);
+  __block CGImageRef screenshot = NULL;
+  
+  // 2. Start the Asynchronous ScreenCaptureKit process
+  [SCShareableContent getShareableContentWithCompletionHandler:^(SCShareableContent *content, NSError *error) {
+    if (error) {
+      NSLog(@"SCKit Error: %@", error);
+      dispatch_semaphore_signal(sema);
+      return;
+    }
+    
+    // Find the main display (usually the first one)
+    SCDisplay *display = [content.displays firstObject];
+    if (!display) {
+      dispatch_semaphore_signal(sema);
+      return;
+    }
+    
+    // Configure the filter and stream
+    SCContentFilter *filter = [[SCContentFilter alloc] initWithDisplay:display excludingApplications:@[] exceptingWindows:@[]];
+    SCStreamConfiguration *config = [[SCStreamConfiguration alloc] init];
+    config.width = display.width;
+    config.height = display.height;
+    config.showsCursor = YES; // Set to NO to hide cursor
+    
+    // Capture the image
+    [SCScreenshotManager captureImageWithFilter:filter configuration:config completionHandler:^(CGImageRef _Nullable img, NSError * _Nullable error) {
+      if (img) {
+        screenshot = CGImageRetain(img); // Retain because we need it outside this block
+      } else {
+        NSLog(@"Capture failed: %@", error);
+      }
+      dispatch_semaphore_signal(sema); // Unlock the thread
+    }];
+  }];
+  
+  // 3. Wait here until the screenshot is done (Timeout after 3 seconds)
+  dispatch_semaphore_wait(sema, dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.0 * NSEC_PER_SEC)));
+  
+  // 4. Process the image (Original Logic)
+  if (!screenshot) return @""; // Or handle error appropriately
+
   NSBitmapImageRep* bitmap = [[NSBitmapImageRep alloc] initWithCGImage:screenshot];
+  CGImageRelease(screenshot); // Release the retained image
+  
   if (!bitmap) return @"";
+  
   @try {
-    NSData* data = [bitmap representationUsingType:NSBitmapImageFileTypePNG properties:{}];
-    [data writeToFile:savePath atomically: NO];
+    // Note: Using explicit dictionary for properties to match new syntax if needed, or nil
+    NSData* data = [bitmap representationUsingType:NSBitmapImageFileTypePNG properties:@{}];
+    [data writeToFile:savePath atomically:NO];
   }
   @catch (NSException* ex) {
     NSLog(@"Caught an exception: %@", ex);

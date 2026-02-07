@@ -77,13 +77,16 @@ set(LIBCLIX_SOURCES
   "src/clix-mac.mm"
 )
 
-set(LIBCLIX_LIBRARIES 
+set(LIBCLIX_LIBRARIES
   ${GFC_LIBRARIES}
   ${OPENCV_LIBRARIES}
   ${TESSERACT_LIBRARIES}
   "-framework foundation"
   "-framework carbon"
   "-framework cocoa"
+  "-framework accelerate"
+  "-framework opencl"
+  "-framework screencapturekit"
 )
 
 set(WITH_GFC_CRYPTO OFF CACHE BOOL "gfc crypto" FORCE)
