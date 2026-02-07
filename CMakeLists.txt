@@ -81,6 +81,7 @@ set(LIBCLIX_LIBRARIES
   ${GFC_LIBRARIES}
   ${OPENCV_LIBRARIES}
   ${TESSERACT_LIBRARIES}
+  ${LEPTONICA_LIBRARIES}
   "-framework foundation"
   "-framework carbon"
   "-framework cocoa"
@@ -105,6 +106,7 @@ include_directories(
 link_directories(
   ${OPENCV_LIBRARY_DIR}
   ${TESSERACT_LIBRARY_DIR}
+  ${LEPTONICA_LIBRARY_DIR}
 )
 
 add_library(${LIBNAME} STATIC ${LIBCLIX_SOURCES})
