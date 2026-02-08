@@ -138,6 +138,13 @@ add_executable(test_clix_mac
 )
 
 target_link_libraries(test_clix_mac PUBLIC
-  ${LIBCLIX_LIBRARIES}
+  clix
+)
+
+add_executable(test_clix_cv
+  test/test_clix_cv.cpp
+)
+
+target_link_libraries(test_clix_cv PUBLIC
   clix
 )

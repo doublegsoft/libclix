@@ -16,8 +16,9 @@ int main(int argc, const char * argv[])
   gfc_gc_init();
   
   int x, y;
-  clix::cv::match("test/data/screenshot.png", "test/data/copy.png", &x, &y);
-  
+  clix::cv::match("../../test/data/screenshot.png", "../../test/data/copy.png", &x, &y);
+  printf("x = %d, y = %d\n", x, y);
+  clix::cv::match("../../test/data/latest.png", "../../test/data/chrome.png", &x, &y);
   printf("x = %d, y = %d\n", x, y);
   gfc_gc_close();
   return 0;

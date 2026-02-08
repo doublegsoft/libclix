@@ -270,18 +270,28 @@
     }
     
     // Find the main display (usually the first one)
-    SCDisplay *display = [content.displays firstObject];
+    SCDisplay* display = [content.displays firstObject];
     if (!display) {
       dispatch_semaphore_signal(sema);
       return;
     }
     
-    // Configure the filter and stream
-    SCContentFilter *filter = [[SCContentFilter alloc] initWithDisplay:display excludingApplications:@[] exceptingWindows:@[]];
+    CGDirectDisplayID displayID = display.displayID;
+    // 获取真实物理像素分辨率
+    CGDisplayModeRef mode = CGDisplayCopyDisplayMode(displayID);
+    size_t pixelWidth = CGDisplayModeGetPixelWidth(mode);
+    size_t pixelHeight = CGDisplayModeGetPixelHeight(mode);
+    CGDisplayModeRelease(mode);
+    SCContentFilter *filter =
+      [[SCContentFilter alloc] initWithDisplay:display
+                      excludingApplications:@[]
+                           exceptingWindows:@[]];
     SCStreamConfiguration *config = [[SCStreamConfiguration alloc] init];
-    config.width = display.width;
-    config.height = display.height;
-    config.showsCursor = YES; // Set to NO to hide cursor
+
+    // ⭐ 使用真实像素
+    config.width = pixelWidth;
+    config.height = pixelHeight;
+    config.showsCursor = NO;
     
     // Capture the image
     [SCScreenshotManager captureImageWithFilter:filter configuration:config completionHandler:^(CGImageRef _Nullable img, NSError * _Nullable error) {
@@ -336,7 +346,7 @@
   return savePath;
 }
 
-- (int) clickAtX:(int)x andY:(int)y ifSeen:(NSString*)wanted {
+- (int) clickAtX:(int)x andY:(int)y ifFound:(NSString*)wanted {
   int retry = 0;
   int fx, fy;
   do {
@@ -358,11 +368,10 @@
   return 0;
 }
 
-- (int) clickAtX:(int)x andY:(int)y untilSeen:(NSString*)wanted byScroll:(int)delta {
+- (int) clickAtX:(int)x andY:(int)y untilFound:(NSString*)wanted byScroll:(int)delta {
   int retry = 0;
   int fx, fy;
-  do {
-    if (retry >= 20) break;
+  for (retry = 0; retry < 20; retry++) {
     NSString* screenshot = [self capture];
     const char* screenshot_path = [screenshot UTF8String];
     const char* image_path = [wanted UTF8String];
@@ -374,40 +383,31 @@
       break;
     }
     [self scrollTo:delta];
-    retry++;
     sleep(1);
-  } while (1);
+  }
   
   return 0;
 }
 
-- (int) clickOnX:(int)x andY:(int)y ifSeen:(NSString*)wanted {
-  int retry = 0;
+- (int) clickAtOffsetX:(int)x andY:(int)y ifFound:(NSString*)wanted {
   int fx, fy;
-  do {
-    if (retry >= 10) break;
-    NSString* screenshot = [self capture];
-    const char* screenshot_path = [screenshot UTF8String];
-    const char* image_path = [wanted UTF8String];
-    sleep(5);
-    clix::cv::match(screenshot_path, image_path, &fx, &fy);
-    if (fx != -1) {
-      [self clickAtX:(fx / 2 + x) andY:(fy / 2 + y)];
-      sleep(3);
-      break;
-    }
-    [self scrollTo:200];
-    retry++;
-    sleep(1);
-  } while (1);
+  NSString* screenshot = [self capture];
+  const char* screenshot_path = [screenshot UTF8String];
+  const char* image_path = [wanted UTF8String];
+  sleep(5);
+  clix::cv::match(screenshot_path, image_path, &fx, &fy);
+  if (fx == -1) {
+    return -1;
+  }
+  [self clickAtX:(fx / 2 + x) andY:(fy / 2 + y)];
+  sleep(3);
   return 0;
 }
 
-- (int) clickOnX:(int)x andY:(int)y untilSeen:(NSString*)wanted {
+- (int) clickAtOffsetX:(int)x andY:(int)y untilFound:(NSString*)wanted {
   int retry = 0;
   int fx, fy;
-  do {
-    if (retry >= 20) break;
+  for (retry = 0; retry < 20; retry++) {
     NSString* screenshot = [self capture];
     const char* screenshot_path = [screenshot UTF8String];
     const char* image_path = [wanted UTF8String];
@@ -419,10 +419,8 @@
       break;
     }
     [self scrollTo:100];
-    retry++;
     sleep(1);
-  } while (1);
-  
+  }
   return 0;
 }
 

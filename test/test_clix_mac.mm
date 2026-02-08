@@ -28,5 +28,11 @@ int main(int argc, const char * argv[]) {
   sleep(1);
   [sim capture];
   
+  // 查找
+  sleep(1);
+  [sim clickOnX:20
+           andY:20
+         ifSeen:@"../../test/data/chrome.png"];
+  
   return 0;
 }
