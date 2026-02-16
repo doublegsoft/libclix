@@ -1,0 +1,1 @@
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -D_BSD_SOURCE -Wno-format -Wno-deprecated-declarations -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/test_gfc_log.dir/src/gfc_log.c.o CMakeFiles/test_gfc_log.dir/test/test_gfc_log.c.o -o test_gfc_log   -L/opt/local/lib 
