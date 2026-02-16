@@ -26,7 +26,7 @@ elseif (APPLE)
     set(OPENCV_DIR                    "/opt/homebrew/Cellar/opencv/4.13.0_2")
   elseif(DARWIN_MAJOR GREATER_EQUAL 21)
     set(OPENCV_DIR                    "/usr/local/Cellar/opencv/4.11.0_1")
-  else()  
+  else(4.8.1)  
     set(OPENCV_DIR                    "/usr/local")
   endif()
 elseif (UNIX)
@@ -101,8 +101,11 @@ set(LIBCLIX_LIBRARIES
   "-framework cocoa"
   "-framework accelerate"
   "-framework opencl"
-  "-framework screencapturekit"
 )
+
+if(DARWIN_MAJOR GREATER_EQUAL 21)
+  list(APPEND LIBCLIX_LIBRARIES "-framework screencapturekit")
+endif()
 
 set(WITH_GFC_CRYPTO OFF CACHE BOOL "gfc crypto" FORCE)
 set(WITH_GFC_jVM OFF CACHE BOOL "gfc jvm" FORCE)

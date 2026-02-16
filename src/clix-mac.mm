@@ -10,7 +10,11 @@
 */
 #import <Cocoa/Cocoa.h>
 #import <ApplicationServices/ApplicationServices.h>
+#if defined(__clang__) && (__clang_major__ >= 14)
 #import <ScreenCaptureKit/ScreenCaptureKit.h>
+#else
+#import <CoreGraphics/CoreGraphics.h>
+#endif
 #import <Carbon/Carbon.h>
 
 #import "clix-mac.h"
@@ -247,16 +251,6 @@
 - (NSString*) capture {
   NSString* savePath = [NSString stringWithFormat:@"%@/latest.png", self.workdir];
 #if defined(__clang__) && (__clang_major__ >= 14)  
-//  CGImageRef screenshot = CGWindowListCreateImage(CGRectInfinite, kCGWindowListOptionOnScreenOnly, kCGNullWindowID, kCGWindowImageDefault);
-//  NSBitmapImageRep* bitmap = [[NSBitmapImageRep alloc] initWithCGImage:screenshot];
-//  if (!bitmap) return @"";
-//  @try {
-//    NSData* data = [bitmap representationUsingType:NSBitmapImageFileTypePNG properties:{}];
-//    [data writeToFile:savePath atomically: NO];
-//  }
-//  @catch (NSException* ex) {
-//    NSLog(@"Caught an exception: %@", ex);
-//  }
   // 1. Setup synchronization to mimic the old blocking behavior
   dispatch_semaphore_t sema = dispatch_semaphore_create(0);
   __block CGImageRef screenshot = NULL;
@@ -288,7 +282,7 @@
                            exceptingWindows:@[]];
     SCStreamConfiguration *config = [[SCStreamConfiguration alloc] init];
 
-    // ⭐ 使用真实像素
+    // 使用真实像素
     config.width = pixelWidth;
     config.height = pixelHeight;
     config.showsCursor = NO;
@@ -324,6 +318,16 @@
     NSLog(@"Caught an exception: %@", ex);
   }
 #else
+  // CGImageRef screenshot = CGWindowListCreateImage(CGRectInfinite, kCGWindowListOptionOnScreenOnly, kCGNullWindowID, kCGWindowImageDefault);
+  // NSBitmapImageRep* bitmap = [[NSBitmapImageRep alloc] initWithCGImage:screenshot];
+  // if (!bitmap) return @"";
+  // @try {
+  //   NSData* data = [bitmap representationUsingType:NSBitmapImageFileTypePNG properties:{}];
+  //  [data writeToFile:savePath atomically: NO];
+  // }
+  // @catch (NSException* ex) {
+  //   NSLog(@"Caught an exception: %@", ex);
+  // }
   // Get the main display ID
   CGDirectDisplayID displayID = CGMainDisplayID();
 
