@@ -86,13 +86,33 @@
 
 - (void) clickAtX:(int)x andY:(int)y {
   CGPoint point = CGPointMake(x, y);
-  CGEventRef event = CGEventCreateMouseEvent(NULL, kCGEventLeftMouseDown, point, kCGMouseButtonLeft);
-  CGEventPost(kCGHIDEventTap, event);
+  // CGEventRef event = CGEventCreateMouseEvent(NULL, kCGEventLeftMouseDown, point, kCGMouseButtonLeft);
+  // CGEventPost(kCGHIDEventTap, event);
 
-  CGEventSetType(event, kCGEventLeftMouseUp);
-  CGEventPost(kCGHIDEventTap, event);
+  // CGEventSetType(event, kCGEventLeftMouseUp);
+  // CGEventPost(kCGHIDEventTap, event);
 
-  CFRelease(event);
+  // CFRelease(event);
+  CGEventRef mouseDown = CGEventCreateMouseEvent(
+        NULL,
+        kCGEventLeftMouseDown,
+        point,
+        kCGMouseButtonLeft
+    );
+
+    CGEventRef mouseUp = CGEventCreateMouseEvent(
+        NULL,
+        kCGEventLeftMouseUp,
+        point,
+        kCGMouseButtonLeft
+    );
+
+    CGEventPost(kCGHIDEventTap, mouseDown);
+    usleep(100 * 1000);
+    CGEventPost(kCGHIDEventTap, mouseUp);
+
+    CFRelease(mouseDown);
+    CFRelease(mouseUp);
 }
 
 - (void) moveToX:(int)x andY:(int)y {
@@ -403,7 +423,11 @@
   if (fx == -1) {
     return -1;
   }
+#if defined(__clang__) && (__clang_major__ >= 14)      
   [self clickAtX:(fx / 2 + x) andY:(fy / 2 + y)];
+#else
+  [self clickAtX:(fx + x) andY:(fy + y)];
+#endif  
   sleep(3);
   return 0;
 }
@@ -418,7 +442,11 @@
     sleep(5);
     clix::cv::match(screenshot_path, image_path, &fx, &fy);
     if (fx != -1) {
+#if defined(__clang__) && (__clang_major__ >= 14)      
       [self clickAtX:(fx / 2 + x) andY:(fy / 2 + y)];
+#else
+      [self clickAtX:(fx + x) andY:(fy + y)];
+#endif      
       sleep(3);
       break;
     }

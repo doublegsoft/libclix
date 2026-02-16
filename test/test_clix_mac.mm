@@ -27,7 +27,8 @@ int main(int argc, const char * argv[]) {
   // 截屏
   sleep(1);
   [sim capture];
-  
+
+#if defined(__clang__) && (__clang_major__ >= 14)  
   // 查找
   sleep(1);
   [sim clickAtOffsetX:20
@@ -38,10 +39,16 @@ int main(int argc, const char * argv[]) {
   [sim clickAtX:250
            andY:99
         ifFound:@"../../test/data/chrome-home.png"];
-  
+
   // 测试粘贴
   sleep(1);
   [sim pasteFromText:@"hello, chrome"];
+#else
+  sleep(1);
+  [sim clickAtOffsetX:20
+                 andY:20
+              ifFound:@"../../test/data/deepseek.png"];
+#endif
   
   return 0;
 }
