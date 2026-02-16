@@ -1,2 +1,0 @@
-/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ar qc libclix.a CMakeFiles/clix.dir/src/clix-cv.cpp.o CMakeFiles/clix.dir/src/clix-ocr.cpp.o CMakeFiles/clix.dir/src/clix-fmt.cpp.o CMakeFiles/clix.dir/src/clix-mac.mm.o
-/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib libclix.a
