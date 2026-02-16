@@ -30,9 +30,18 @@ int main(int argc, const char * argv[]) {
   
   // 查找
   sleep(1);
-  [sim clickOnX:20
-           andY:20
-         ifSeen:@"../../test/data/chrome.png"];
+  [sim clickAtOffsetX:20
+                 andY:20
+              ifFound:@"../../test/data/chrome.png"];
+  
+  sleep(1);
+  [sim clickAtX:250
+           andY:99
+        ifFound:@"../../test/data/chrome-home.png"];
+  
+  // 测试粘贴
+  sleep(1);
+  [sim pasteFromText:@"hello, chrome"];
   
   return 0;
 }
