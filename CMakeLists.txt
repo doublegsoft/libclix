@@ -103,8 +103,11 @@ set(LIBCLIX_LIBRARIES
   "-framework opencl"
 )
 
-if(DARWIN_MAJOR GREATER_EQUAL 21)
-  list(APPEND LIBCLIX_LIBRARIES "-framework screencapturekit")
+if(APPLE)
+  find_library(SCREENCAPTUREKIT_FRAMEWORK ScreenCaptureKit)
+  if(SCREENCAPTUREKIT_FRAMEWORK)
+    list(APPEND LIBCLIX_LIBRARIES "-framework screencapturekit")
+  endif()
 endif()
 
 set(WITH_GFC_CRYPTO OFF CACHE BOOL "gfc crypto" FORCE)
