@@ -93,12 +93,18 @@
   // CGEventPost(kCGHIDEventTap, event);
 
   // CFRelease(event);
+  
+  [self moveToX:x andY: y];
+  usleep(200000);
   CGEventRef mouseDown = CGEventCreateMouseEvent(
         NULL,
         kCGEventLeftMouseDown,
         point,
         kCGMouseButtonLeft
     );
+    CGEventSetIntegerValueField(mouseDown, kCGMouseEventClickState, 1);
+    CGEventPost(kCGHIDEventTap, mouseDown);
+    usleep(10000);
 
     CGEventRef mouseUp = CGEventCreateMouseEvent(
         NULL,
@@ -106,9 +112,7 @@
         point,
         kCGMouseButtonLeft
     );
-
-    CGEventPost(kCGHIDEventTap, mouseDown);
-    usleep(100 * 1000);
+    CGEventSetIntegerValueField(mouseUp, kCGMouseEventClickState, 1);
     CGEventPost(kCGHIDEventTap, mouseUp);
 
     CFRelease(mouseDown);
