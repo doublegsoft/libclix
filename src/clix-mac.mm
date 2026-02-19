@@ -84,15 +84,60 @@
   return self;
 }
 
+- (void) dblclickAtX:(int)x andY:(int)y {
+  CGPoint point = CGPointMake(x, y);
+  [self moveToX:x andY: y];
+  usleep(200000);
+
+  CGEventRef mouseDown = CGEventCreateMouseEvent(
+      NULL,
+      kCGEventLeftMouseDown,
+      point,
+      kCGMouseButtonLeft
+  );
+  CGEventSetIntegerValueField(mouseDown, kCGMouseEventClickState, 1);
+  CGEventPost(kCGHIDEventTap, mouseDown);
+  usleep(10000);
+
+  CGEventRef mouseUp = CGEventCreateMouseEvent(
+      NULL,
+      kCGEventLeftMouseUp,
+      point,
+      kCGMouseButtonLeft
+  );
+  CGEventSetIntegerValueField(mouseUp, kCGMouseEventClickState, 1);
+  CGEventPost(kCGHIDEventTap, mouseUp);
+
+  CFRelease(mouseDown);
+  CFRelease(mouseUp);
+
+  usleep(150000);
+
+  mouseDown = CGEventCreateMouseEvent(
+      NULL,
+      kCGEventLeftMouseDown,
+      point,
+      kCGMouseButtonLeft
+  );
+  CGEventSetIntegerValueField(mouseDown, kCGMouseEventClickState, 1);
+  CGEventPost(kCGHIDEventTap, mouseDown);
+  usleep(10000);
+
+  mouseUp = CGEventCreateMouseEvent(
+      NULL,
+      kCGEventLeftMouseUp,
+      point,
+      kCGMouseButtonLeft
+  );
+  CGEventSetIntegerValueField(mouseUp, kCGMouseEventClickState, 1);
+  CGEventPost(kCGHIDEventTap, mouseUp);
+
+  CFRelease(mouseDown);
+  CFRelease(mouseUp);
+}
+
 - (void) clickAtX:(int)x andY:(int)y {
   CGPoint point = CGPointMake(x, y);
-  // CGEventRef event = CGEventCreateMouseEvent(NULL, kCGEventLeftMouseDown, point, kCGMouseButtonLeft);
-  // CGEventPost(kCGHIDEventTap, event);
-
-  // CGEventSetType(event, kCGEventLeftMouseUp);
-  // CGEventPost(kCGHIDEventTap, event);
-
-  // CFRelease(event);
   
   [self moveToX:x andY: y];
   usleep(200000);
@@ -221,8 +266,6 @@
   [pasteBoard declareTypes:[NSArray arrayWithObjects:NSPasteboardTypeString, nil] owner:nil];
   [pasteBoard setString:text forType:NSPasteboardTypeString];
   
-  
-
   /*!
   ** SELECT ALL
   */

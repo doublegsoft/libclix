@@ -28,6 +28,11 @@
 - (void)scrollTo:(int)delta;
 
 /*
+** Simulates mouse-double-click operation on specific coordination on screen.
+*/
+- (void)dblclickAtX:(int)x andY:(int)y;
+
+/*
 ** Simulates mouse-click operation on specific coordination on screen.
 */
 - (void)clickAtX:(int)x andY:(int)y;
