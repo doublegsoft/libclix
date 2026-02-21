@@ -13,7 +13,7 @@
 #if defined(__APPLE__) && defined(__MACH__)
 #import "clix-mac.h"
 #elif defined(__linux)
-#include "clix-linux.h"
+#include "clix-desktop.h"
 #endif
 
 #include "clix-t.hpp"

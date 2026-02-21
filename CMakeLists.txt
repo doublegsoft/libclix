@@ -179,16 +179,6 @@ elseif (CMAKE_SYSTEM_NAME STREQUAL "Linux")
     X11
     Xtst
   )
-
-  add_executable(test_linux 
-    src/clix-linux.c
-  )
-
-  target_link_libraries(test_linux PUBLIC
-    clix
-    X11
-    Xtst
-  )
 endif()
 
 add_executable(test_clix_cv
