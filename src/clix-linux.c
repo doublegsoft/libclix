@@ -9,6 +9,7 @@
 **  .JMML..JMML.P^YbmdP'   YMbmd'.JMML..JMML..AM.   .MA.
 */
 #include <X11/Xlib.h>
+#include <X11/Xatom.h>
 #include <X11/extensions/XTest.h>
 #include <X11/Xutil.h>
 #include <unistd.h>
@@ -116,6 +117,78 @@ clix_scroll(clix_context_t* ctx, int delta)
 void 
 clix_paste_from_text(clix_context_t* ctx, const char* text) 
 {
+  // Window window = XCreateSimpleWindow(
+  //     ctx->display,
+  //     DefaultRootWindow(ctx->display),
+  //     0, 0, 1, 1,
+  //     0, 0, 0);
+
+  // Atom clipboard   = XInternAtom(ctx->display, "CLIPBOARD", False);
+  // Atom targets     = XInternAtom(ctx->display, "TARGETS", False);
+  // Atom utf8_string = XInternAtom(ctx->display, "UTF8_STRING", False);
+  // Atom text_atom   = XInternAtom(ctx->display, "TEXT", False);
+  // Atom atom_atom   = XInternAtom(ctx->display, "ATOM", False);
+
+  // XSetSelectionOwner(ctx->display, clipboard, window, CurrentTime);
+  // XFlush(ctx->display);
+
+  // if (XGetSelectionOwner(ctx->display, clipboard) != window) {
+  //   printf("Failed to set clipboard owner\n");
+  //   return;
+  // }
+
+  // XEvent event;
+  // XEvent respond;
+  // memset(&respond, 0, sizeof(respond));
+
+  // XNextEvent(ctx->display, &event);
+  // XSelectionRequestEvent* req = &event.xselectionrequest;
+  // respond.xselection.type      = SelectionNotify;
+  // respond.xselection.display   = req->display;
+  // respond.xselection.requestor = req->requestor;
+  // respond.xselection.selection = req->selection;
+  // respond.xselection.target    = req->target;
+  // respond.xselection.time      = req->time;
+  // respond.xselection.property  = req->property;
+  
+  // if (req->target == targets)
+  // {
+  //   Atom supported[] = { utf8_string, XA_STRING, text_atom };
+  //   XChangeProperty(ctx->display,
+  //                   req->requestor,
+  //                   req->property,
+  //                   atom_atom,
+  //                   32,
+  //                   PropModeReplace,
+  //                   (unsigned char*)supported,
+  //                   3);
+  // }
+  // else if (req->target == utf8_string ||
+  //           req->target == XA_STRING ||
+  //           req->target == text_atom)
+  // {
+  //   XChangeProperty(ctx->display,
+  //                   req->requestor,
+  //                   req->property,
+  //                   req->target,
+  //                   8,
+  //                   PropModeReplace,
+  //                   (unsigned char*)text,
+  //                   strlen(text));
+  // }
+  // else
+  // {
+  //   respond.xselection.property = None;
+  // }
+
+  // XSendEvent(ctx->display, req->requestor, False, 0, &respond);
+  // XFlush(ctx->display);
+
+  FILE* pipe = popen("xclip -selection clipboard", "w");
+  fputs(text, pipe);
+  fclose(pipe);
+  
+  usleep(1500000);
   clix_ctrl_a(ctx);
   usleep(1500000);
   clix_ctrl_v(ctx);
@@ -127,6 +200,7 @@ clix_screen_capture(clix_context_t* ctx, const char* path)
   Window root = DefaultRootWindow(ctx->display);
   XWindowAttributes gwa;
 
+  XGetWindowAttributes(ctx->display, root, &gwa);
   XImage* image = XGetImage(ctx->display, root, 0, 0,
                             gwa.width, gwa.height,
                             AllPlanes, ZPixmap);
@@ -135,7 +209,7 @@ clix_screen_capture(clix_context_t* ctx, const char* path)
 
   FILE* fp = fopen(path, "wb");
   if (!fp) return;
-
+  
   fprintf(fp, "P6\n%d %d\n255\n", image->width, image->height);
 
   for (int y = 0; y < image->height; y++) {
