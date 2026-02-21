@@ -10,7 +10,11 @@
 */
 #pragma once
 
+#if defined(__APPLE__) && defined(__MACH__)
 #import "clix-mac.h"
+#elif defined(__linux)
+#include "clix-linux.h"
+#endif
 
 #include "clix-t.hpp"
 #include "clix-ocr.hpp"

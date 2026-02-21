@@ -10,7 +10,7 @@
 ##
 cmake_minimum_required(VERSION 3.13)
 
-project(libclix LANGUAGES CXX)
+project(libclix LANGUAGES C CXX)
 
 set(LIBNAME clix)
 set(CMAKE_CXX_STANDARD 11)
@@ -118,7 +118,8 @@ elseif (APPLE)
   list(APPEND LIBCLIX_LIBRARIES "-framework cocoa")
   list(APPEND LIBCLIX_LIBRARIES "-framework accelerate")
   list(APPEND LIBCLIX_LIBRARIES "-framework opencl")
-elseif (UNIX)
+elseif (CMAKE_SYSTEM_NAME STREQUAL "Linux")
+  list(APPEND LIBCLIX_SOURCES "src/clix-linux.c")
 endif()
 
 if(APPLE)
@@ -161,14 +162,33 @@ target_link_libraries(${LIBNAME}_shared PUBLIC
 
 if (WIN32)
 elseif (APPLE)
-add_executable(test_clix_mac 
-  test/test_clix_mac.mm
-)
+  add_executable(test_clix_mac 
+    test/test_clix_mac.mm
+  )
 
-target_link_libraries(test_clix_mac PUBLIC
-  clix
-)
-elseif (UNIX)
+  target_link_libraries(test_clix_mac PUBLIC
+    clix
+  )
+elseif (CMAKE_SYSTEM_NAME STREQUAL "Linux")
+  add_executable(test_clix_linux 
+    test/test_clix_linux.c
+  )
+
+  target_link_libraries(test_clix_linux PUBLIC
+    clix
+    X11
+    Xtst
+  )
+
+  add_executable(test_linux 
+    src/clix-linux.c
+  )
+
+  target_link_libraries(test_linux PUBLIC
+    clix
+    X11
+    Xtst
+  )
 endif()
 
 add_executable(test_clix_cv
