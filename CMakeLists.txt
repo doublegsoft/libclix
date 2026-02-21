@@ -89,7 +89,7 @@ set(LEPTONICA_LIBRARIES               leptonica)
 ##                                   gfc                                      ##
 ##                                                                            ##
 ################################################################################
-set(GFC_DIR                           "3rd/gfc")
+set(GFC_DIR                           "3rd/gfc-0.1.2")
 set(GFC_INCLUDE_DIR                   "${GFC_DIR}/include")
 set(GFC_LIBRARY_DIR                   "${GFC_DIR}/${BUILD}")
 set(GFC_LIBRARIES                     gfc)
