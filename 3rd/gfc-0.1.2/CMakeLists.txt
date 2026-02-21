@@ -151,12 +151,12 @@ else ()
   endif()
 endif(WIN32)
 
-if (UNIX)
-  set_target_properties(gfc PROPERTIES POSITION_INDEPENDENT_CODE ON)
-endif(UNIX)
 add_library(gfc STATIC ${GFC_SOURCES})
 add_library(gfc_shared SHARED ${GFC_SOURCES})
 set_target_properties(gfc_shared PROPERTIES OUTPUT_NAME gfc)
+if (UNIX)
+  set_target_properties(gfc PROPERTIES POSITION_INDEPENDENT_CODE ON)
+endif(UNIX)
 
 if (WIN32)
   link_directories(
