@@ -97,8 +97,7 @@ set(GFC_LIBRARIES                     gfc)
 set(LIBCLIX_SOURCES
   "src/clix-cv.cpp"
   "src/clix-ocr.cpp"
-  "src/clix-fmt.cpp"
-  "src/clix-mac.mm"
+  "src/clix-fmt.cpp" 
 )
 
 set(LIBCLIX_LIBRARIES
@@ -106,12 +105,19 @@ set(LIBCLIX_LIBRARIES
   ${OPENCV_LIBRARIES}
   ${TESSERACT_LIBRARIES}
   ${LEPTONICA_LIBRARIES}
-  "-framework foundation"
-  "-framework carbon"
-  "-framework cocoa"
-  "-framework accelerate"
-  "-framework opencl"
 )
+
+if (WIN32)
+elseif (APPLE)
+  list(APPEND LIBCLIX_SOURCES "src/clix-mac.mm")
+
+  list(APPEND LIBCLIX_LIBRARIES "-framework foundation")
+  list(APPEND LIBCLIX_LIBRARIES "-framework carbon")
+  list(APPEND LIBCLIX_LIBRARIES "-framework cocoa")
+  list(APPEND LIBCLIX_LIBRARIES "-framework accelerate")
+  list(APPEND LIBCLIX_LIBRARIES "-framework opencl")
+elseif (UNIX)
+endif()
 
 if(APPLE)
   find_library(SCREENCAPTUREKIT_FRAMEWORK ScreenCaptureKit)
@@ -151,6 +157,8 @@ target_link_libraries(${LIBNAME}_shared PUBLIC
   ${LIBCLIX_LIBRARIES}
 )
 
+if (WIN32)
+elseif (APPLE)
 add_executable(test_clix_mac 
   test/test_clix_mac.mm
 )
@@ -158,6 +166,8 @@ add_executable(test_clix_mac
 target_link_libraries(test_clix_mac PUBLIC
   clix
 )
+elseif (UNIX)
+endif()
 
 add_executable(test_clix_cv
   test/test_clix_cv.cpp
