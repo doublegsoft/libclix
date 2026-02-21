@@ -33,17 +33,17 @@ project(gfc VERSION 1.0.0 DESCRIPTION "g foundation class")
 
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D_BSD_SOURCE -Wno-format -Wno-deprecated-declarations")
 
-set(LIB_LUAJIT		"libluajit")
-set(LUAJIT				"LuaJIT-2.1")
-set(LIB_LUA				"liblua")
-set(LUA						"lua-5.4.6")
+set(LIB_LUAJIT    "libluajit")
+set(LUAJIT        "LuaJIT-2.1")
+set(LIB_LUA        "liblua")
+set(LUA            "lua-5.4.6")
 
-option(WITH_GFC_JVM 			"gfc jvm" OFF)
-option(WITH_GFC_LUA 			"gfc lua" OFF)
-option(WITH_GFC_CRYPTO 		"gfc crypto" OFF)
+option(WITH_GFC_JVM       "gfc jvm" OFF)
+option(WITH_GFC_LUA       "gfc lua" OFF)
+option(WITH_GFC_CRYPTO     "gfc crypto" OFF)
 
 set(GFC_SOURCES 
-	src/gfc_base64.c
+  src/gfc_base64.c
   src/gfc_hex.c
   src/gfc_list.c
   src/gfc_log.c
@@ -72,18 +72,18 @@ set(GFC_SOURCES
 ##
 ####################
 if(WITH_GFC_JVM)
-	if (APPLE)
-		list(APPEND GFC_SOURCES src/gfc_jvm.c)
-	endif (APPLE)
+  if (APPLE)
+    list(APPEND GFC_SOURCES src/gfc_jvm.c)
+  endif (APPLE)
 endif(WITH_GFC_JVM)
 
 if(WITH_GFC_CRYPTO) 
-	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DGFC_USE_OPENSSL")
-	list(APPEND GFC_SOURCES src/gfc_crypto.c)
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DGFC_USE_OPENSSL")
+  list(APPEND GFC_SOURCES src/gfc_crypto.c)
 endif(WITH_GFC_CRYPTO)
 
 if(WITH_GFC_LUA)
-	list(APPEND GFC_SOURCES src/gfc_lua.c)
+  list(APPEND GFC_SOURCES src/gfc_lua.c)
 endif(WITH_GFC_LUA)
 
 ####################
@@ -92,23 +92,23 @@ endif(WITH_GFC_LUA)
 ##
 ####################
 if(WITH_GFC_LUA)
-	add_custom_command(OUTPUT ${LIB_LUAJIT}_OUT
-	  COMMAND mkdir -p ${CMAKE_BINARY_DIR}/3rd/${LUAJIT}/
-	  COMMAND cp -rf ${CMAKE_SOURCE_DIR}/3rd/${LUAJIT}/ ${CMAKE_BINARY_DIR}/3rd/${LUAJIT}
-	  COMMAND export MACOSX_DEPLOYMENT_TARGET=10.16 && make -C ${CMAKE_BINARY_DIR}/3rd/${LUAJIT} 
-	)
-	add_custom_target(${LIB_LUAJIT} ALL
-	  DEPENDS ${LIB_LUAJIT}_OUT
-	)
-	
-	add_custom_command(OUTPUT ${LIB_LUA}_OUT
-	  COMMAND mkdir -p ${CMAKE_BINARY_DIR}/3rd/${LUA}/
-	  COMMAND cp -rf ${CMAKE_SOURCE_DIR}/3rd/${LUA}/ ${CMAKE_BINARY_DIR}/3rd/${LUA}
-	  COMMAND make -C ${CMAKE_BINARY_DIR}/3rd/${LUA} 
-	)
-	add_custom_target(${LIB_LUA} ALL
-	  DEPENDS ${LIB_LUA}_OUT
-	)
+  add_custom_command(OUTPUT ${LIB_LUAJIT}_OUT
+    COMMAND mkdir -p ${CMAKE_BINARY_DIR}/3rd/${LUAJIT}/
+    COMMAND cp -rf ${CMAKE_SOURCE_DIR}/3rd/${LUAJIT}/ ${CMAKE_BINARY_DIR}/3rd/${LUAJIT}
+    COMMAND export MACOSX_DEPLOYMENT_TARGET=10.16 && make -C ${CMAKE_BINARY_DIR}/3rd/${LUAJIT} 
+  )
+  add_custom_target(${LIB_LUAJIT} ALL
+    DEPENDS ${LIB_LUAJIT}_OUT
+  )
+  
+  add_custom_command(OUTPUT ${LIB_LUA}_OUT
+    COMMAND mkdir -p ${CMAKE_BINARY_DIR}/3rd/${LUA}/
+    COMMAND cp -rf ${CMAKE_SOURCE_DIR}/3rd/${LUA}/ ${CMAKE_BINARY_DIR}/3rd/${LUA}
+    COMMAND make -C ${CMAKE_BINARY_DIR}/3rd/${LUA} 
+  )
+  add_custom_target(${LIB_LUA} ALL
+    DEPENDS ${LIB_LUA}_OUT
+  )
 endif(WITH_GFC_LUA)
 
 ####################
@@ -118,8 +118,8 @@ endif(WITH_GFC_LUA)
 ####################
 if(UNIX)
   link_directories(
-	  /opt/local/lib
-	)
+    /opt/local/lib
+  )
 endif(UNIX)
 
 ####################
@@ -128,112 +128,115 @@ endif(UNIX)
 ##
 ####################
 if (WIN32)
-	include_directories(
-		"include"
-	)
+  include_directories(
+    "include"
+  )
 else ()  
-	include_directories(
-		"/usr/local/include"
-		"/opt/local/include"
-		"include"
-	)
-	if(WITH_GFC_JVM)	
-		include_directories(
-			"/Library/Java/JavaVirtualMachines/jdk1.8.0_212.jdk/Contents/Home/include"
-			"/Library/Java/JavaVirtualMachines/jdk1.8.0_212.jdk/Contents/Home/include/darwin"
-		)
-	endif()
-	if(WITH_GFC_LUA)	
-		include_directories(
-			"3rd/${LUA}"
-			"3rd/${LUAJIT}"
-		)
-	endif()
+  include_directories(
+    "/usr/local/include"
+    "/opt/local/include"
+    "include"
+  )
+  if(WITH_GFC_JVM)  
+    include_directories(
+      "/Library/Java/JavaVirtualMachines/jdk1.8.0_212.jdk/Contents/Home/include"
+      "/Library/Java/JavaVirtualMachines/jdk1.8.0_212.jdk/Contents/Home/include/darwin"
+    )
+  endif()
+  if(WITH_GFC_LUA)  
+    include_directories(
+      "3rd/${LUA}"
+      "3rd/${LUAJIT}"
+    )
+  endif()
 endif(WIN32)
 
+if (UNIX)
+  set_target_properties(gfc PROPERTIES POSITION_INDEPENDENT_CODE ON)
+endif(UNIX)
 add_library(gfc STATIC ${GFC_SOURCES})
 add_library(gfc_shared SHARED ${GFC_SOURCES})
 set_target_properties(gfc_shared PROPERTIES OUTPUT_NAME gfc)
 
 if (WIN32)
-	link_directories(
-		"/opt/local/x86_64-w64-mingw32/lib"
-	)
-	target_link_libraries(gfc PRIVATE
-	  iconv
-	  crypto
-	  ws2_32
-	  Rpcrt4
-	)
-	target_link_libraries(gfc_shared PRIVATE
-	  iconv
-	  crypto
-	  ws2_32
-	  Rpcrt4
-	)
+  link_directories(
+    "/opt/local/x86_64-w64-mingw32/lib"
+  )
+  target_link_libraries(gfc PRIVATE
+    iconv
+    crypto
+    ws2_32
+    Rpcrt4
+  )
+  target_link_libraries(gfc_shared PRIVATE
+    iconv
+    crypto
+    ws2_32
+    Rpcrt4
+  )
 else()
-	if(WITH_GFC_JVM)	
-		target_link_libraries(gfc PRIVATE
-		  "/Library/Java/JavaVirtualMachines/jdk1.8.0_212.jdk/Contents/Home/jre/lib/jli/libjli.dylib"
-		  "/Library/Java/JavaVirtualMachines/jdk1.8.0_212.jdk/Contents/Home/jre/lib/server/libjvm.dylib"
-		)	
-		target_link_libraries(gfc_shared PRIVATE
-		  "/Library/Java/JavaVirtualMachines/jdk1.8.0_212.jdk/Contents/Home/jre/lib/jli/libjli.dylib"
-		  "/Library/Java/JavaVirtualMachines/jdk1.8.0_212.jdk/Contents/Home/jre/lib/server/libjvm.dylib"
-		)	
-	endif(WITH_GFC_JVM)
-	if(WITH_GFC_CRYPTO)	
-		target_link_libraries(gfc PRIVATE 
-			crypto
-		)
-		target_link_libraries(gfc_shared PRIVATE 
-			crypto
-		)
-	endif(WITH_GFC_CRYPTO)
-	if(WITH_GFC_LUA)	
-		link_directories(
-			${CMAKE_BINARY_DIR}/3rd/${LUA}
-		)
-		target_link_libraries(gfc PRIVATE 
-			lua
-		)
-		target_link_libraries(gfc_shared PRIVATE 
-			lua
-		)
-	endif(WITH_GFC_LUA)
+  if(WITH_GFC_JVM)  
+    target_link_libraries(gfc PRIVATE
+      "/Library/Java/JavaVirtualMachines/jdk1.8.0_212.jdk/Contents/Home/jre/lib/jli/libjli.dylib"
+      "/Library/Java/JavaVirtualMachines/jdk1.8.0_212.jdk/Contents/Home/jre/lib/server/libjvm.dylib"
+    )  
+    target_link_libraries(gfc_shared PRIVATE
+      "/Library/Java/JavaVirtualMachines/jdk1.8.0_212.jdk/Contents/Home/jre/lib/jli/libjli.dylib"
+      "/Library/Java/JavaVirtualMachines/jdk1.8.0_212.jdk/Contents/Home/jre/lib/server/libjvm.dylib"
+    )  
+  endif(WITH_GFC_JVM)
+  if(WITH_GFC_CRYPTO)  
+    target_link_libraries(gfc PRIVATE 
+      crypto
+    )
+    target_link_libraries(gfc_shared PRIVATE 
+      crypto
+    )
+  endif(WITH_GFC_CRYPTO)
+  if(WITH_GFC_LUA)  
+    link_directories(
+      ${CMAKE_BINARY_DIR}/3rd/${LUA}
+    )
+    target_link_libraries(gfc PRIVATE 
+      lua
+    )
+    target_link_libraries(gfc_shared PRIVATE 
+      lua
+    )
+  endif(WITH_GFC_LUA)
 endif(WIN32)
 
 add_executable(test_gfc_string
-	src/gfc_string.c
-	src/gfc_gc.c
-	test/test_gfc_string.c
+  src/gfc_string.c
+  src/gfc_gc.c
+  test/test_gfc_string.c
 )
 
 target_link_libraries(test_gfc_string PRIVATE
-	gfc
-)	
+  gfc
+)  
 
 if(WIN32)
-	target_link_libraries(test_gfc_string PRIVATE
-	  libiconv.dll.a
-	)
+  target_link_libraries(test_gfc_string PRIVATE
+    libiconv.dll.a
+  )
 endif(WIN32)
 
 add_executable(test_gfc_map
-	src/gfc_map.c
-	src/gfc_string.c
-	src/gfc_gc.c
-	test/test_gfc_map.c
+  src/gfc_map.c
+  src/gfc_string.c
+  src/gfc_gc.c
+  test/test_gfc_map.c
 )
 
 target_link_libraries(test_gfc_map PRIVATE
-	gfc
-)	
-	
+  gfc
+)  
+  
 if (WIN32)
-	target_link_libraries(test_gfc_map PRIVATE
-	  libiconv.dll.a
-	)
+  target_link_libraries(test_gfc_map PRIVATE
+    libiconv.dll.a
+  )
 endif (WIN32)
 
 add_executable(test_gfc_date
@@ -286,24 +289,24 @@ add_executable(test_gfc_ws
 )
 
 if (WIN32)
-	target_link_libraries(test_gfc_ws PRIVATE
-	  pthread
-	  wsock32
-	)
+  target_link_libraries(test_gfc_ws PRIVATE
+    pthread
+    wsock32
+  )
 else()
-	target_link_libraries(test_gfc_ws PRIVATE
-	  pthread
-	)
+  target_link_libraries(test_gfc_ws PRIVATE
+    pthread
+  )
 endif (WIN32)
 
 add_executable(test_gfc_fs
-	src/gfc_fs.c
+  src/gfc_fs.c
   test/test_gfc_fs.c
 )
 
 target_link_libraries(test_gfc_fs PRIVATE
-	gfc
-)	
+  gfc
+)  
 
 if(WITH_GFC_CRYPTO)
 add_executable(test_gfc_crypto
@@ -313,26 +316,26 @@ add_executable(test_gfc_crypto
 )
 
 if (WIN32)
-	target_link_libraries(test_gfc_crypto PRIVATE
-	  libcrypto.dll.a
-	)
+  target_link_libraries(test_gfc_crypto PRIVATE
+    libcrypto.dll.a
+  )
 else (UNIX)
-	
-	target_link_libraries(test_gfc_crypto PRIVATE
-	  crypto
-	)
+  
+  target_link_libraries(test_gfc_crypto PRIVATE
+    crypto
+  )
 endif (WIN32)
 endif(WITH_GFC_CRYPTO)
 
-if(WITH_GFC_JVM)	
-	if(APPLE)
+if(WITH_GFC_JVM)  
+  if(APPLE)
 add_executable(test_gfc_jvm
   test/test_gfc_jvm.c
 )
 target_link_libraries(test_gfc_jvm PRIVATE
-	gfc
+  gfc
 )
-	endif (APPLE)
+  endif (APPLE)
 endif(WITH_GFC_JVM)
 
 if(WITH_GFC_LUA)
@@ -341,7 +344,7 @@ add_executable(test_gfc_lua
 )
 
 target_link_libraries(test_gfc_lua PRIVATE
-	gfc
+  gfc
 )
 endif(WITH_GFC_LUA)
 
@@ -350,13 +353,13 @@ add_executable(test_gfc_cli
 )
 
 target_link_libraries(test_gfc_cli PRIVATE
-	gfc
-)	
+  gfc
+)  
 
 add_executable(test_gfc_id
   test/test_gfc_id.c
 )
 
 target_link_libraries(test_gfc_id PRIVATE
-	gfc
-)	
+  gfc
+)  
