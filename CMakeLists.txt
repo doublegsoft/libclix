@@ -78,11 +78,13 @@ elseif (APPLE)
   else()
     set(LEPTONICA_DIR                 "/usr/local/Cellar/leptonica/1.85.0")
   endif()
+  set(LEPTONICA_LIBRARIES             leptonica)
 elseif (UNIX)
+  set(LEPTONICA_LIBRARIES             lept)
 endif()
 set(LEPTONICA_INCLUDE_DIR             "${LEPTONICA_DIR}/include")
 set(LEPTONICA_LIBRARY_DIR             "${LEPTONICA_DIR}/lib")
-set(LEPTONICA_LIBRARIES               leptonica)
+
 
 ################################################################################
 ##                                                                            ##
