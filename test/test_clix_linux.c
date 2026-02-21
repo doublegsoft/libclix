@@ -18,8 +18,8 @@ main(int argc, const char* argv[])
 
   clix_scroll(ctx, 200);
 
-  // clix_paste_from_text(ctx, "hello, clix");
-  // sleep(2);
+  clix_paste_from_text(ctx, "hello, clix");
+  sleep(2);
 
   clix_screen_capture(ctx, "screen.ppm");
 
