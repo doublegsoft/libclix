@@ -16,6 +16,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <png.h>
 
 #include "clix-desktop.h"
 
@@ -61,6 +62,58 @@ void clix_click(clix_context_t* ctx, int button)
   XTestFakeButtonEvent(ctx->display, button, True, CurrentTime);
   XTestFakeButtonEvent(ctx->display, button, False, CurrentTime);
   XFlush(ctx->display);
+}
+
+static int 
+clix_save_as_png(const char* filename, XImage* image)
+{
+  FILE* fp = fopen(filename, "wb");
+  if (!fp) return -1;
+
+  png_structp png = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
+  if (!png) return -1;
+
+  png_infop info = png_create_info_struct(png);
+  if (!info) return -1;
+
+  if (setjmp(png_jmpbuf(png))) return -1;
+
+  png_init_io(png, fp);
+
+  png_set_IHDR(png, info,
+               image->width,
+               image->height,
+               8,
+               PNG_COLOR_TYPE_RGB,
+               PNG_INTERLACE_NONE,
+               PNG_COMPRESSION_TYPE_BASE,
+               PNG_FILTER_TYPE_BASE);
+
+  png_write_info(png, info);
+
+  png_bytep row = (png_bytep) malloc(3 * image->width);
+
+  for (int y = 0; y < image->height; y++)
+  {
+    for (int x = 0; x < image->width; x++)
+    {
+      unsigned long pixel = XGetPixel(image, x, y);
+
+      row[x*3 + 0] = (pixel & image->red_mask)   >> 16;
+      row[x*3 + 1] = (pixel & image->green_mask) >> 8;
+      row[x*3 + 2] = (pixel & image->blue_mask);
+    }
+
+    png_write_row(png, row);
+  }
+
+  png_write_end(png, NULL);
+
+  free(row);
+  fclose(fp);
+  png_destroy_write_struct(&png, &info);
+
+  return 0;
 }
 
 clix_context_t*
@@ -204,26 +257,24 @@ clix_screen_capture(clix_context_t* ctx, const char* path)
   XImage* image = XGetImage(ctx->display, root, 0, 0,
                             gwa.width, gwa.height,
                             AllPlanes, ZPixmap);
+  clix_save_as_png(path, image);                          
 
-  if (!image) return;
+  // if (!image) return;
+  // FILE* fp = fopen(path, "wb");
+  // if (!fp) return;
+  // fprintf(fp, "P6\n%d %d\n255\n", image->width, image->height);
+  // for (int y = 0; y < image->height; y++) {
+  //   for (int x = 0; x < image->width; x++) {
+  //     unsigned long pixel = XGetPixel(image, x, y);
+  //     unsigned char r = (pixel & image->red_mask) >> 16;
+  //     unsigned char g = (pixel & image->green_mask) >> 8;
+  //     unsigned char b = (pixel & image->blue_mask);
+  //     fputc(r, fp);
+  //     fputc(g, fp);
+  //     fputc(b, fp);
+  //   }
+  // }
 
-  FILE* fp = fopen(path, "wb");
-  if (!fp) return;
-  
-  fprintf(fp, "P6\n%d %d\n255\n", image->width, image->height);
-
-  for (int y = 0; y < image->height; y++) {
-    for (int x = 0; x < image->width; x++) {
-      unsigned long pixel = XGetPixel(image, x, y);
-      unsigned char r = (pixel & image->red_mask) >> 16;
-      unsigned char g = (pixel & image->green_mask) >> 8;
-      unsigned char b = (pixel & image->blue_mask);
-      fputc(r, fp);
-      fputc(g, fp);
-      fputc(b, fp);
-    }
-  }
-
-  fclose(fp);
+  // fclose(fp);
   XDestroyImage(image);
 }

@@ -21,7 +21,7 @@ main(int argc, const char* argv[])
   clix_paste_from_text(ctx, "hello, clix");
   sleep(2);
 
-  clix_screen_capture(ctx, "screen.ppm");
+  clix_screen_capture(ctx, "screen.png");
 
   clix_context_free(ctx);
   return 0;

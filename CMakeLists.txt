@@ -120,6 +120,8 @@ elseif (APPLE)
   list(APPEND LIBCLIX_LIBRARIES "-framework opencl")
 elseif (CMAKE_SYSTEM_NAME STREQUAL "Linux")
   list(APPEND LIBCLIX_SOURCES "src/clix-linux.c")
+
+  list(APPEND LIBCLIX_LIBRARIES png)
 endif()
 
 if(APPLE)
