@@ -113,6 +113,11 @@ set(LIBCLIX_LIBRARIES
 )
 
 if (WIN32)
+  list(APPEND LIBCLIX_SOURCES "src/clix-win.c")
+
+  list(APPEND LIBCLIX_LIBRARIES png)
+  list(APPEND LIBCLIX_LIBRARIES user32)
+  list(APPEND LIBCLIX_LIBRARIES gdi32)
 elseif (APPLE)
   list(APPEND LIBCLIX_SOURCES "src/clix-mac.mm")
 
@@ -166,6 +171,13 @@ target_link_libraries(${LIBNAME}_shared PUBLIC
 )
 
 if (WIN32)
+  add_executable(test_clix_win 
+    test/test_clix_win.c
+  )
+
+  target_link_libraries(test_clix_win PUBLIC
+    clix
+  )
 elseif (APPLE)
   add_executable(test_clix_mac 
     test/test_clix_mac.mm
