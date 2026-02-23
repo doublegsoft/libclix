@@ -13,10 +13,10 @@
 
 int main()
 {
-  Sleep(2000);
+  Sleep(1000);
 
-  clix_click_at_point(NULL, 500, 500);
-  clix_paste_from_text(NULL, "Hello from MinGW!");
+  // clix_click_at_point(NULL, 500, 500);
+  // clix_paste_from_text(NULL, "Hello from MinGW!");
   clix_screen_capture(NULL, "screenshot.bmp");
 
   return 0;

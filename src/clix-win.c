@@ -60,20 +60,6 @@ clix_ctrl_v()
 }
 
 static void 
-clix_move_to_point(int x, int y)
-{
-  INPUT input;
-  ZeroMemory(&input, sizeof(INPUT));
-
-  input.type = INPUT_MOUSE;
-  input.mi.dx = (x * 65535) / GetSystemMetrics(SM_CXSCREEN);
-  input.mi.dy = (y * 65535) / GetSystemMetrics(SM_CYSCREEN);
-  input.mi.dwFlags = MOUSEEVENTF_MOVE | MOUSEEVENTF_ABSOLUTE;
-
-  SendInput(1, &input, sizeof(INPUT));
-}
-
-static void 
 clix_click()
 {
   INPUT inputs[2];
@@ -89,9 +75,23 @@ clix_click()
 }
 
 void 
+clix_move_to_point(clix_context_t* ctx, int x, int y)
+{
+  INPUT input;
+  ZeroMemory(&input, sizeof(INPUT));
+
+  input.type = INPUT_MOUSE;
+  input.mi.dx = (x * 65535) / GetSystemMetrics(SM_CXSCREEN);
+  input.mi.dy = (y * 65535) / GetSystemMetrics(SM_CYSCREEN);
+  input.mi.dwFlags = MOUSEEVENTF_MOVE | MOUSEEVENTF_ABSOLUTE;
+
+  SendInput(1, &input, sizeof(INPUT));
+}
+
+void 
 clix_click_at_point(clix_context_t* ctx, int x, int y)
 {
-  clix_move_to_point(x, y);
+  clix_move_to_point(ctx, x, y);
   Sleep(200);
   clix_click();
 }
@@ -99,9 +99,9 @@ clix_click_at_point(clix_context_t* ctx, int x, int y)
 void 
 clix_dblclick_at_point(clix_context_t* ctx, int x, int y)
 {
-  clix_click_at_point(x, y);
+  clix_click_at_point(ctx, x, y);
   Sleep(150);
-  clix_click_at_point(x, y);
+  clix_click_at_point(ctx, x, y);
 }
 
 void 
@@ -128,8 +128,8 @@ clix_paste_from_text(clix_context_t* ctx, const char* text)
 void 
 clix_screen_capture(clix_context_t* ctx, const char* path)
 {
-  int width  = GetSystemMetrics(SM_CXSCREEN);
-  int height = GetSystemMetrics(SM_CYSCREEN);
+  int width  = GetSystemMetrics(SM_CXSCREEN) * 2;
+  int height = GetSystemMetrics(SM_CYSCREEN) * 2;
 
   HDC hScreen = GetDC(NULL);
   HDC hDC = CreateCompatibleDC(hScreen);
