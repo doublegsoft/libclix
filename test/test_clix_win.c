@@ -17,7 +17,7 @@ int main()
 
   // clix_click_at_point(NULL, 500, 500);
   // clix_paste_from_text(NULL, "Hello from MinGW!");
-  clix_screen_capture(NULL, "screenshot.bmp");
+  clix_screen_capture(NULL, "screenshot.png");
 
   return 0;
 }
