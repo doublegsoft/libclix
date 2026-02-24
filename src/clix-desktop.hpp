@@ -29,6 +29,7 @@ public:
   void scroll(int delta);
 
   void dblclickAt(int x, int y);
+
   void clickAt(int x, int y);
 
   void clickWhenVisible(
@@ -91,5 +92,4 @@ private:
 
   clix_context_t* ctx;
 
-  bool imageExists(const std::string& wanted);
 };

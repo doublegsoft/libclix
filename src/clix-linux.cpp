@@ -47,9 +47,58 @@ ClixDesktopSimulator::clickAt(int x, int y)
   clix_click_at_point(this->ctx, x, y);
 }
 
-void ClixDesktopSimulator::dblclickAt(int x, int y) 
+void 
+ClixDesktopSimulator::dblclickAt(int x, int y) 
 {
   clickAt(x, y);
   usleep(100000);
   clickAt(x, y);
+}
+
+std::string 
+ClixDesktopSimulator::capture()
+{
+  std::string path = this->workdir + "/latest.png";
+  clix_screen_capture(this->ctx, path.c_str());
+  return path;
+}
+
+void 
+ClixDesktopSimulator::scroll(int delta) 
+{
+  clix_scroll(this->ctx, delta);
+}
+
+int 
+ClixDesktopSimulator::clickAtUntilFound(int x,
+                                        int y,
+                                        const std::string& wanted,
+                                        int delta)
+{
+  return 0;
+}
+
+int 
+ClixDesktopSimulator::clickAtOffsetIfFound(int x,
+                                           int y,
+                                           const std::string& wanted)
+{
+  int fx, fy;
+  std::string screenshot = this->capture();
+  sleep(5);
+  clix::cv::match(screenshot.c_str(), wanted.c_str(), &fx, &fy);
+  if (fx == -1) {
+    return -1;
+  }
+  clickAt(x + fx, y + fy);
+  sleep(3);
+  return 0;
+}
+
+int 
+ClixDesktopSimulator::clickAtOffsetUntilFound(int x,
+                                              int y,const 
+                                              std::string& wanted)
+{  
+  return 0;
 }
