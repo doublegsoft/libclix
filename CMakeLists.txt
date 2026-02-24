@@ -31,7 +31,7 @@ set(BUILD                             "build/${PLATFORM}")
 ##                                                                            ##
 ################################################################################
 if (WIN32)
-set(OPENCV_DIR                      "d:\\opt\\msys64\\mingw64")
+  set(OPENCV_DIR                      "d:\\opt\\msys64\\mingw64")
 elseif (APPLE)
   if(CMAKE_SYSTEM_PROCESSOR STREQUAL "arm64")
     set(OPENCV_DIR                    "/opt/homebrew/Cellar/opencv/4.13.0_2")
@@ -41,9 +41,9 @@ elseif (APPLE)
     set(OPENCV_DIR                    "/usr/local")
   endif()
 elseif (UNIX)
-  
+  set(OPENCV_DIR                      "/usr")
 endif()
-message(WARNING "${OPENCV_DIR}")
+
 set(OPENCV_INCLUDE_DIR                "${OPENCV_DIR}/include/opencv4")
 set(OPENCV_LIBRARY_DIR                "${OPENCV_DIR}/lib")
 set(OPENCV_LIBRARIES                  opencv_core
