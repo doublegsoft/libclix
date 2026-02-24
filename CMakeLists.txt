@@ -113,7 +113,7 @@ set(LIBCLIX_LIBRARIES
 )
 
 if (WIN32)
-  list(APPEND LIBCLIX_SOURCES "src/clix-win.c")
+  list(APPEND LIBCLIX_SOURCES "src/clix-win.cpp")
 
   list(APPEND LIBCLIX_LIBRARIES png)
   list(APPEND LIBCLIX_LIBRARIES user32)
@@ -127,7 +127,7 @@ elseif (APPLE)
   list(APPEND LIBCLIX_LIBRARIES "-framework accelerate")
   list(APPEND LIBCLIX_LIBRARIES "-framework opencl")
 elseif (CMAKE_SYSTEM_NAME STREQUAL "Linux")
-  list(APPEND LIBCLIX_SOURCES "src/clix-linux.c")
+  list(APPEND LIBCLIX_SOURCES "src/clix-linux.cpp")
 
   list(APPEND LIBCLIX_LIBRARIES png)
 endif()
@@ -172,7 +172,7 @@ target_link_libraries(${LIBNAME}_shared PUBLIC
 
 if (WIN32)
   add_executable(test_clix_win 
-    test/test_clix_win.c
+    test/test_clix_win.cpp
   )
 
   target_link_libraries(test_clix_win PUBLIC
@@ -188,7 +188,7 @@ elseif (APPLE)
   )
 elseif (CMAKE_SYSTEM_NAME STREQUAL "Linux")
   add_executable(test_clix_linux 
-    test/test_clix_linux.c
+    test/test_clix_linux.cpp
   )
 
   target_link_libraries(test_clix_linux PUBLIC

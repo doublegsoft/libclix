@@ -22,6 +22,7 @@
 #include <png.h>
 
 #include "clix-desktop.h"
+#include "clix-cv.hpp"
 
 struct clix_context_s
 {
@@ -214,8 +215,7 @@ clix_screen_capture(clix_context_t* ctx, const char* path)
   shminfo.shmid = shmget(IPC_PRIVATE,
                          img->bytes_per_line * img->height,
                          IPC_CREAT | 0777);
-  shminfo.shmaddr = img->data =
-    shmat(shminfo.shmid, 0, 0);
+  shminfo.shmaddr = img->data = (char*)shmat(shminfo.shmid, 0, 0);
   shminfo.readOnly = False;
 
   XShmAttach(ctx->display, &shminfo);
