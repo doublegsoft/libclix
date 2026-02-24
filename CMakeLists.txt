@@ -113,7 +113,7 @@ set(LIBCLIX_LIBRARIES
 )
 
 if (WIN32)
-  list(APPEND LIBCLIX_SOURCES "src/clix-win.cpp")
+  list(APPEND LIBCLIX_SOURCES "src/clix-win.c")
 
   list(APPEND LIBCLIX_LIBRARIES png)
   list(APPEND LIBCLIX_LIBRARIES user32)
@@ -127,6 +127,7 @@ elseif (APPLE)
   list(APPEND LIBCLIX_LIBRARIES "-framework accelerate")
   list(APPEND LIBCLIX_LIBRARIES "-framework opencl")
 elseif (CMAKE_SYSTEM_NAME STREQUAL "Linux")
+  list(APPEND LIBCLIX_SOURCES "src/clix-linux.c")
   list(APPEND LIBCLIX_SOURCES "src/clix-linux.cpp")
 
   list(APPEND LIBCLIX_LIBRARIES png)
