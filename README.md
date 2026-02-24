@@ -54,3 +54,11 @@ endif()
 cmake -G "MinGW Makefiles" ../.. -DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++
 ```
 
+# Ubuntu (Latest)
+
+```
+sudo nano /etc/gdm/custom.conf
+
+WaylandEnable=false
+```
+

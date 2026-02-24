@@ -195,6 +195,7 @@ elseif (CMAKE_SYSTEM_NAME STREQUAL "Linux")
     clix
     X11
     Xtst
+    Xext
   )
 endif()
 

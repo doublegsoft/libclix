@@ -11,6 +11,9 @@
 #include <X11/Xlib.h>
 #include <X11/Xatom.h>
 #include <X11/extensions/XTest.h>
+#include <X11/extensions/XShm.h>
+#include <sys/ipc.h>
+#include <sys/shm.h>
 #include <X11/Xutil.h>
 #include <unistd.h>
 #include <stdio.h>
@@ -251,13 +254,34 @@ void
 clix_screen_capture(clix_context_t* ctx, const char* path) 
 {
   Window root = DefaultRootWindow(ctx->display);
-  XWindowAttributes gwa;
 
-  XGetWindowAttributes(ctx->display, root, &gwa);
-  XImage* image = XGetImage(ctx->display, root, 0, 0,
-                            gwa.width, gwa.height,
-                            AllPlanes, ZPixmap);
-  clix_save_as_png(path, image);                          
+  XWindowAttributes attrs;
+  XGetWindowAttributes(ctx->display, root, &attrs);
+
+  // XImage* image = XGetImage(ctx->display, root, 0, 0,
+  //                           attrs.width, attrs.height,
+  //                           AllPlanes, ZPixmap);
+  XShmSegmentInfo shminfo;
+  XImage* img = XShmCreateImage(
+    ctx->display,
+    DefaultVisual(ctx->display, DefaultScreen(ctx->display)),
+    DefaultDepth(ctx->display, DefaultScreen(ctx->display)),
+    ZPixmap,
+    NULL,
+    &shminfo,
+    attrs.width,
+    attrs.height
+  );
+  shminfo.shmid = shmget(IPC_PRIVATE,
+                         img->bytes_per_line * img->height,
+                         IPC_CREAT | 0777);
+  shminfo.shmaddr = img->data =
+    shmat(shminfo.shmid, 0, 0);
+  shminfo.readOnly = False;
+
+  XShmAttach(ctx->display, &shminfo);
+  XShmGetImage(ctx->display, root, img, 0, 0, AllPlanes);
+  clix_save_as_png(path, img);                          
 
   // if (!image) return;
   // FILE* fp = fopen(path, "wb");
@@ -276,5 +300,5 @@ clix_screen_capture(clix_context_t* ctx, const char* path)
   // }
 
   // fclose(fp);
-  XDestroyImage(image);
+  XDestroyImage(img);
 }
