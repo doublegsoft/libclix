@@ -39,6 +39,9 @@ clix_dblclick_at_point(clix_context_t* ctx, int x, int y);
 void
 clix_scroll(clix_context_t* ctx, int delta);
 
+void 
+clix_enter(clix_context_t* ctx);
+
 void
 clix_paste_from_text(clix_context_t* ctx, const char* text);
 

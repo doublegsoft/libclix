@@ -171,6 +171,12 @@ clix_scroll(clix_context_t* ctx, int delta)
 }
 
 void 
+clix_enter(clix_context_t* ctx) 
+{
+  clix_key_press(ctx, XK_Return, 0);
+}
+
+void 
 clix_paste_from_text(clix_context_t* ctx, const char* text) 
 {
   FILE* pipe = popen("xclip -selection clipboard", "w");
