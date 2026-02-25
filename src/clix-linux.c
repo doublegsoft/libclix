@@ -164,7 +164,8 @@ clix_scroll(clix_context_t* ctx, int delta)
   int button = delta > 0 ? 4 : 5;
   int count = abs(delta) / 50;
 
-  for (int i = 0; i < count; i++) {
+  for (int i = 0; i < count; i++) 
+  {
     clix_click(ctx, button);
     usleep(5000);
   }
