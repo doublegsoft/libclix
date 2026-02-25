@@ -47,7 +47,7 @@ ClixDesktopSimulator::clickAt(int x, int y)
   clix_click_at_point(this->ctx, x, y);
 }
 
-void 
+void
 ClixDesktopSimulator::dblclickAt(int x, int y) 
 {
   clickAt(x, y);
@@ -76,12 +76,13 @@ ClixDesktopSimulator::clickAtPointUntilFound(int x,
                                              int delta)
 {
   int retry = 0;
+  int fx, fy;
   do {
     if (retry >= 10) break;
     std::string screenshot = this->capture();
     sleep(5);
     clix::cv::match(screenshot.c_str(), wanted.c_str(), &fx, &fy);
-    if (fx != -1) {
+    if (fx != -1)
       break;
     retry++;
   } while (1);
@@ -109,16 +110,17 @@ ClixDesktopSimulator::clickAtOffsetIfFound(int x,
 
 int 
 ClixDesktopSimulator::clickAtOffsetUntilFound(int x,
-                                              int y,const 
-                                              std::string& wanted)
+                                              int y,
+                                              const std::string& wanted)
 {  
   int retry = 0;
+  int fx, fy;
   do {
     if (retry >= 10) break;
     std::string screenshot = this->capture();
     sleep(5);
     clix::cv::match(screenshot.c_str(), wanted.c_str(), &fx, &fy);
-    if (fx != -1) {
+    if (fx != -1)
       break;
     retry++;  
   } while (1);
@@ -128,7 +130,7 @@ ClixDesktopSimulator::clickAtOffsetUntilFound(int x,
 }
 
 void 
-ClixDesktopSimulator::pasteFromText(const char* text) 
+ClixDesktopSimulator::pasteFromText(const std::string& text) 
 {
-  clix_paste_from_text(this->ctx, text);
+  clix_paste_from_text(this->ctx, text.c_str());
 }
