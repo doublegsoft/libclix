@@ -88,7 +88,7 @@ ClixDesktopSimulator::clickAtPointUntilFound(int x,
                                              int delta)
 {
   int retry = 0;
-  int fx, fy;
+  int fx = 0, fy = 0;
   do {
     if (retry >= 10) break;
     std::string screenshot = this->capture();
@@ -128,9 +128,8 @@ ClixDesktopSimulator::clickAtOffsetUntilFound(int x,
                                               int delta)
 {  
   int retry = 0;
-  int fx, fy;
+  int fx = 0, fy = 0;
   do {
-    if (retry >= 10) break;
     std::string screenshot = this->capture();
     sleep(5);
     clix::cv::match(screenshot.c_str(), wanted.c_str(), &fx, &fy);
