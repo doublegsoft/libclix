@@ -125,6 +125,10 @@ std::string capture();
 */
 void pasteFromText(const std::string& text);
 
+void enter();
+
+void save(const std::string& path);
+
 int clickAt(
   int x,
   int y,

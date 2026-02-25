@@ -69,6 +69,18 @@ ClixDesktopSimulator::scroll(int delta)
   clix_scroll(this->ctx, delta);
 }
 
+void 
+ClixDesktopSimulator::enter() 
+{
+  clix_enter(this->ctx);
+}
+
+void 
+ClixDesktopSimulator::save(const std::string& path) 
+{
+}
+
+
 int 
 ClixDesktopSimulator::clickAtPointUntilFound(int x,
                                              int y,
