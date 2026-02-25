@@ -204,7 +204,8 @@ int clickAtOffsetIfFound(
 int clickAtOffsetUntilFound(
   int x,
   int y,
-  const std::string& wanted
+  const std::string& wanted,
+  int delta
 );
 
 void scrollUntilSeen(

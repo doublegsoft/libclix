@@ -97,6 +97,7 @@ ClixDesktopSimulator::clickAtPointUntilFound(int x,
     if (fx != -1)
       break;
     retry++;
+    this->scroll(delta);
   } while (1);
   clickAt(x, y);
   sleep(1);
@@ -123,7 +124,8 @@ ClixDesktopSimulator::clickAtOffsetIfFound(int x,
 int 
 ClixDesktopSimulator::clickAtOffsetUntilFound(int x,
                                               int y,
-                                              const std::string& wanted)
+                                              const std::string& wanted, 
+                                              int delta)
 {  
   int retry = 0;
   int fx, fy;
@@ -135,6 +137,7 @@ ClixDesktopSimulator::clickAtOffsetUntilFound(int x,
     if (fx != -1)
       break;
     retry++;  
+    this->scroll(delta);
   } while (1);
   clickAt(x + fx, y + fy);
   sleep(1);
