@@ -145,7 +145,7 @@
  *
  * @return 始终返回 0（目前未定义失败码）
  */
-- (int) clickAtOffsetX:(int)x andY:(int)y andDelta:(int)delta untilFound:(NSString*)wanted;
+- (int) clickAtOffsetX:(int)x andY:(int)y untilFound:(NSString*)wanted byScroll:(int)delta;;
 
 
 /*
