@@ -418,24 +418,17 @@
 }
 
 - (int) clickAtX:(int)x andY:(int)y ifFound:(NSString*)wanted {
-  int retry = 0;
   int fx, fy;
-  do {
-    if (retry >= 10) break;
-    NSString* screenshot = [self capture];
-    const char* screenshot_path = [screenshot UTF8String];
-    const char* image_path = [wanted UTF8String];
-    sleep(5);
-    clix::cv::match(screenshot_path, image_path, &fx, &fy);
-    if (fx != -1) {
-      [self clickAtX:x andY:y];
-      sleep(3);
-      break;
-    }
-    [self scrollTo:200];
-    retry++;
-    sleep(1);
-  } while (1);
+
+  NSString* screenshot = [self capture];
+  const char* screenshot_path = [screenshot UTF8String];
+  const char* image_path = [wanted UTF8String];
+  sleep(1);
+  clix::cv::match(screenshot_path, image_path, &fx, &fy);
+  if (fx != -1) {
+    [self clickAtX:x andY:y];
+  }
+  sleep(1);
   return 0;
 }
 
@@ -456,7 +449,7 @@
     if (delta != 0) {
       [self scrollTo:delta];
     }
-    sleep(1);
+    sleep(5);
   }
   
   return 0;
