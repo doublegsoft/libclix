@@ -140,11 +140,12 @@
  *
  * @param x 点击位置的 X 偏移量（用于修正匹配中心点）
  * @param y 点击位置的 Y 偏移量
+ * @param delta 滚动距离（正负表示滚动方向）
  * @param wanted 目标模板图片路径
  *
  * @return 始终返回 0（目前未定义失败码）
  */
-- (int) clickAtOffsetX:(int)x andY:(int)y untilFound:(NSString*)wanted;
+- (int) clickAtOffsetX:(int)x andY:(int)y andDelta:(int)delta untilFound:(NSString*)wanted;
 
 
 /*
