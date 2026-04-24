@@ -418,43 +418,38 @@
 }
 
 - (int) clickAtX:(int)x andY:(int)y ifFound:(NSString*)wanted {
-  int retry = 0;
   int fx, fy;
-  do {
-    if (retry >= 10) break;
-    NSString* screenshot = [self capture];
-    const char* screenshot_path = [screenshot UTF8String];
-    const char* image_path = [wanted UTF8String];
-    sleep(5);
-    clix::cv::match(screenshot_path, image_path, &fx, &fy);
-    if (fx != -1) {
-      [self clickAtX:x andY:y];
-      sleep(3);
-      break;
-    }
-    [self scrollTo:200];
-    retry++;
-    sleep(1);
-  } while (1);
+
+  NSString* screenshot = [self capture];
+  const char* screenshot_path = [screenshot UTF8String];
+  const char* image_path = [wanted UTF8String];
+  sleep(1);
+  clix::cv::match(screenshot_path, image_path, &fx, &fy);
+  if (fx != -1) {
+    [self clickAtX:x andY:y];
+  }
+  sleep(1);
   return 0;
 }
 
 - (int) clickAtX:(int)x andY:(int)y untilFound:(NSString*)wanted byScroll:(int)delta {
   int retry = 0;
   int fx, fy;
-  for (retry = 0; retry < 20; retry++) {
+  for (retry = 0; retry < 9999; retry++) {
     NSString* screenshot = [self capture];
     const char* screenshot_path = [screenshot UTF8String];
     const char* image_path = [wanted UTF8String];
-    sleep(5);
+    sleep(1);
     clix::cv::match(screenshot_path, image_path, &fx, &fy);
     if (fx != -1) {
       [self clickAtX:x andY:y];
-      sleep(3);
+      sleep(1);
       break;
     }
-    [self scrollTo:delta];
-    sleep(1);
+    if (delta != 0) {
+      [self scrollTo:delta];
+    }
+    sleep(5);
   }
   
   return 0;
@@ -465,7 +460,7 @@
   NSString* screenshot = [self capture];
   const char* screenshot_path = [screenshot UTF8String];
   const char* image_path = [wanted UTF8String];
-  sleep(5);
+  sleep(1);
   clix::cv::match(screenshot_path, image_path, &fx, &fy);
   if (fx == -1) {
     return -1;
@@ -475,18 +470,18 @@
 #else
   [self clickAtX:(fx + x) andY:(fy + y)];
 #endif  
-  sleep(3);
+  sleep(1);
   return 0;
 }
 
-- (int) clickAtOffsetX:(int)x andY:(int)y untilFound:(NSString*)wanted {
+- (int) clickAtOffsetX:(int)x andY:(int)y untilFound:(NSString*)wanted byScroll:(int)delta {
   int retry = 0;
   int fx, fy;
-  for (retry = 0; retry < 20; retry++) {
+  for (retry = 0; retry < 9999; retry++) {
     NSString* screenshot = [self capture];
     const char* screenshot_path = [screenshot UTF8String];
     const char* image_path = [wanted UTF8String];
-    sleep(5);
+    sleep(1);
     clix::cv::match(screenshot_path, image_path, &fx, &fy);
     if (fx != -1) {
 #if defined(__clang__) && (__clang_major__ >= 14)      
@@ -494,10 +489,12 @@
 #else
       [self clickAtX:(fx + x) andY:(fy + y)];
 #endif      
-      sleep(3);
+      sleep(1);
       break;
     }
-    [self scrollTo:100];
+    if (delta != 0) {
+      [self scrollTo:delta];
+    }
     sleep(1);
   }
   return 0;
