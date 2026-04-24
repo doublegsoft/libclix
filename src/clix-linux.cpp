@@ -129,6 +129,7 @@ ClixDesktopSimulator::clickAtOffsetUntilFound(int x,
 {  
   int retry = 0;
   int fx = 0, fy = 0;
+  
   do {
     std::string screenshot = this->capture();
     sleep(5);
