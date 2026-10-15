@@ -199,28 +199,48 @@ clix_load_from_file(clix_context_t* ctx, const char* path)
 
   FILE* file = fopen(path, "rb");
   if (!file) {
-    perror("clix_load_from_path: failed to open file");
+    perror("clix_load_from_file: failed to open file");
     return;
   }
 
-  FILE* pipe = popen("xclip -selection clipboard", "w");
-  if (!pipe) {
-    perror("clix_load_from_path: failed to run xclip");
+  // Determine file size
+  if (fseek(file, 0, SEEK_END) != 0) {
+    perror("clix_load_from_file: failed to seek to end of file");
     fclose(file);
     return;
   }
 
-  char buffer[4096];
-  size_t bytes_read;
-  while ((bytes_read = fread(buffer, 1, sizeof(buffer), file)) > 0) {
-    if (fwrite(buffer, 1, bytes_read, pipe) != bytes_read) {
-      perror("clix_load_from_path: failed to write to xclip pipe");
-      break;
-    }
+  long file_size = ftell(file);
+  if (file_size < 0) {
+    perror("clix_load_from_file: failed to get file size");
+    fclose(file);
+    return;
+  }
+  rewind(file);
+
+  // Allocate memory buffer for the entire file content + null terminator
+  char* buffer = (char*)malloc((size_t)file_size + 1);
+  if (!buffer) {
+    perror("clix_load_from_file: failed to allocate memory");
+    fclose(file);
+    return;
   }
 
+  size_t bytes_read = fread(buffer, 1, (size_t)file_size, file);
+  buffer[bytes_read] = '\0';
   fclose(file);
+
+  // Send entire in-memory buffer to clipboard
+  FILE* pipe = popen("xclip -selection clipboard", "w");
+  if (!pipe) {
+    perror("clix_load_from_file: failed to run xclip");
+    free(buffer);
+    return;
+  }
+
+  fwrite(buffer, 1, bytes_read, pipe);
   pclose(pipe);
+  free(buffer);
 
   usleep(1500000);
   clix_ctrl_a(ctx);
