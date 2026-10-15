@@ -191,7 +191,7 @@ clix_paste_from_text(clix_context_t* ctx, const char* text)
 }
 
 void 
-clix_load_from_path(clix_context_t* ctx, const char* path) 
+clix_load_from_file(clix_context_t* ctx, const char* path) 
 {
   if (!ctx || !path) {
     return;
