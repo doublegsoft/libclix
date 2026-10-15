@@ -146,5 +146,12 @@ ClixDesktopSimulator::clickAtOffsetUntilFound(int x,
 void 
 ClixDesktopSimulator::pasteFromText(const std::string& text) 
 {
-  clix_paste_from_text(this->ctx, text.c_str());
+  const char* str = text.empty() ? nullptr : text.c_str();
+  clix_paste_from_text(this->ctx, str);
+}
+
+void 
+ClixDesktopSimulator::loadFromFile(const std::string& text) 
+{
+  clix_load_from_file(this->ctx, text.c_str());
 }

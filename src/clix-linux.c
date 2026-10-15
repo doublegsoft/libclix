@@ -191,6 +191,44 @@ clix_paste_from_text(clix_context_t* ctx, const char* text)
 }
 
 void 
+clix_load_from_path(clix_context_t* ctx, const char* path) 
+{
+  if (!ctx || !path) {
+    return;
+  }
+
+  FILE* file = fopen(path, "rb");
+  if (!file) {
+    perror("clix_load_from_path: failed to open file");
+    return;
+  }
+
+  FILE* pipe = popen("xclip -selection clipboard", "w");
+  if (!pipe) {
+    perror("clix_load_from_path: failed to run xclip");
+    fclose(file);
+    return;
+  }
+
+  char buffer[4096];
+  size_t bytes_read;
+  while ((bytes_read = fread(buffer, 1, sizeof(buffer), file)) > 0) {
+    if (fwrite(buffer, 1, bytes_read, pipe) != bytes_read) {
+      perror("clix_load_from_path: failed to write to xclip pipe");
+      break;
+    }
+  }
+
+  fclose(file);
+  pclose(pipe);
+
+  usleep(1500000);
+  clix_ctrl_a(ctx);
+  usleep(1500000);
+  clix_ctrl_v(ctx);
+}
+
+void 
 clix_screen_capture(clix_context_t* ctx, const char* path) 
 {
   Window root = DefaultRootWindow(ctx->display);

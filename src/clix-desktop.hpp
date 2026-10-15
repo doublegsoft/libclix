@@ -125,6 +125,26 @@ std::string capture();
 */
 void pasteFromText(const std::string& text);
 
+/*!
+** @brief Load text from a file into clipboard and paste it into focused target.
+**
+** This function:
+**   1. Reads content from the file specified by `path`
+**   2. Streams the file content into the system clipboard via xclip
+**   3. Simulates a Select All (Ctrl+A) and Paste (Ctrl+V) action into focused element
+**
+** @param ctx  Pointer to the active clix context.
+** @param path Path to the file containing text to be loaded and pasted.
+**
+** @note The caller must ensure `path` points to a valid, readable file.
+** @note Relies on `xclip` being installed and available in the system PATH.
+** @warning This function assumes a focused input field exists.
+** @warning Clipboard content will be overwritten.
+**
+** @sideeffect Modifies system clipboard content and sends simulated keyboard events.
+*/
+void loadFromFile(const std::string& path);
+
 void enter();
 
 void save(const std::string& path);

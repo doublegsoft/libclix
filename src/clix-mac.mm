@@ -261,7 +261,7 @@
   CFRelease(eventSource);
 }
 
-- (void) pasteFromText:(NSString*)text {
+- (void) loadFromFile:(NSString*)text {
   NSPasteboard *pasteBoard = [NSPasteboard generalPasteboard];
   [pasteBoard declareTypes:[NSArray arrayWithObjects:NSPasteboardTypeString, nil] owner:nil];
   [pasteBoard setString:text forType:NSPasteboardTypeString];
@@ -310,6 +310,24 @@
   CGEventPost(kCGHIDEventTap, event);
   CFRelease(event);
 #endif  
+}
+
+- (void) loadAndPasteFromPath:(NSString*)path {
+  if (!path || [path length] == 0) {
+    return;
+  }
+
+  NSError* error = nil;
+  NSString* content = [NSString stringWithContentsOfFile:path 
+                                                encoding:NSUTF8StringEncoding 
+                                                   error:&error];
+  if (error != nil || content == nil) {
+    NSLog(@"[ClixMacSimulator] Failed to load file at '%@': %@", path, [error localizedDescription]);
+    return;
+  }
+
+  // Uses your existing paste method (copies to clipboard + performs Cmd+A & Cmd+V)
+  [self pasteFromText:content];
 }
 
 /*!

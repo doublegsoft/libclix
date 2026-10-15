@@ -42,8 +42,46 @@ clix_scroll(clix_context_t* ctx, int delta);
 void 
 clix_enter(clix_context_t* ctx);
 
+/*!
+** @brief Copy text to system clipboard and simulate select-all and paste actions.
+**
+** This function:
+**   1. Pipes the provided text into the system clipboard via xclip
+**   2. Simulates a Select All action (Ctrl+A) into the active context
+**   3. Simulates a Paste action (Ctrl+V) into the active context
+**
+** @param ctx  Pointer to the active clix context.
+** @param text Null-terminated C string to be copied and pasted.
+**
+** @note If `text` is NULL, clipboard copying is skipped, but key events are still sent.
+** @note Relies on `xclip` being installed and present in system PATH.
+** @warning Assumes a focused input field exists in the active target.
+** @warning Overwrites existing system clipboard content if `text` is not NULL.
+**
+** @sideeffect Modifies system clipboard content and sends simulated keystrokes.
+*/
 void
 clix_paste_from_text(clix_context_t* ctx, const char* text);
+
+/*!
+** @brief Stream file contents directly into the system clipboard.
+**
+** This function:
+**   1. Opens the file at the specified `path`
+**   2. Streams the file contents in chunks directly to xclip
+**   3. Updates the system clipboard with the file content
+**
+** @param ctx  Pointer to the active clix context.
+** @param path Path to the source file to be loaded.
+**
+** @note Caller must ensure `path` points to a readable file.
+** @note Streams in 4096-byte chunks to support arbitrarily large files without large memory allocation.
+** @warning Overwrites current system clipboard content.
+**
+** @sideeffect Modifies system clipboard content.
+*/
+void
+clix_load_from_file(clix_context_t* ctx, const char* path);
 
 void
 clix_screen_capture(clix_context_t* ctx, const char* path);
